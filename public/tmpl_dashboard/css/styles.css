@@ -1,0 +1,28 @@
+/*================================
+=      Dashboard   > Perfil      =
+==================================*/
+.user-avatar {
+    height: auto;
+    width: 50px;
+}
+
+.block{
+	text-transform: capitalize;
+}
+
+.error-validate{
+	color: red;
+}
+
+.empty_else {
+    color: red;
+    font-weight: 600;
+}
+
+.avatars_icon{
+	width: 2vw;
+}
+
+.inline-block{
+	display: inline-block;
+}
