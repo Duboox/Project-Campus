@@ -1,9 +1,9 @@
 @extends('layouts.dashboard')
-@section('title', 'Equipos Registrados: '.count($products))
+@section('title', 'Calibración de equipos: '.count($products))
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
    <div class="col-lg-10">
-      <h2>Equipos Registrados</h2>
+      <h2>Calibraciones</h2>
       <ol class="breadcrumb">
          <li>
             <a href="{{ route('home') }}">Inicio</a>
@@ -20,9 +20,6 @@
          <div class="ibox float-e-margins">
             <div class="ibox-title">
                <h5>Registrados: {{ count($products) }}</h5>
-               <div class="ibox-tools">
-                    <a href="{{ route('products.create') }}" class="btn btn-primary btn-xs">Crear Equipo</a>
-                </div>
                <div class="ibox-tools">
                   <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -44,6 +41,7 @@
                         <th>Última calibración</th>
                         <th>Control de calibración</th>
                         <th>Estado</th>
+                        <th>Despachado</th>
                         <th>Otros</th>
                         <th>Registro</th>
                         <th>Opciones</th>
@@ -70,6 +68,12 @@
                       @if($product->status==0)
                         <td>No calibrado</td>
                       @endif
+                      @if($product->delivery_status==1)
+                        <td>Despachado</td>
+                      @endif
+                      @if($product->delivery_status==0)
+                        <td>No despachado</td>
+                      @endif
                       <td>{{ $product->others }}</td>
                       <td>{{ $product->created_at->diffForHumans() }}</td>
                       @can('products.edit')
@@ -88,6 +92,15 @@
                           {{ Form::close() }}
                       </td>
                       @endcan
+                      @if($product->status==1 && $product->delivery_status==1)
+                        @can('products.show')
+                          <td width="10px">
+                              <a href="{{ route('products.show', $product->id) }}" class="btn btn-sm btn-info">
+                                  Certificado
+                              </a>
+                          </td>
+                        @endcan
+                      @endif
                     </tr>
                      @endforeach
                 </tbody>

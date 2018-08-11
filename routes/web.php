@@ -53,6 +53,9 @@ Route::prefix('dashboard')->middleware(['auth', 'disable.back'])->group(function
 	Route::post('products/pdf/report', 'Dashboard\ProductController@productPDFreport')->name('product.pdf.report');
 	Route::resource('products', 'Dashboard\ProductController');
 
+	// Products
+	Route::resource('calibrations', 'Dashboard\CalibrationController');
+
 	// Request Services
 	Route::get('services/pdf', 'Dashboard\ServiceController@servicePDFview')->name('services.pdf');
 	Route::get('all/services/pdf', 'Dashboard\ServiceController@AllservicePDF')->name('all.services.pdf');

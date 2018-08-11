@@ -59,7 +59,14 @@
                     <li>
                         <a href="{{ route('products.index') }}">
                             <i class="fa fa-users"></i>
-                            <span class="nav-label">Productos</span>
+                            <span class="nav-label">Equipos</span>
+                            <span class="label label-warning pull-right">{{ $product_count }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('calibrations.index') }}">
+                            <i class="fa fa-users"></i>
+                            <span class="nav-label">Control de calibraciones</span>
                             <span class="label label-warning pull-right">{{ $product_count }}</span>
                         </a>
                     </li>

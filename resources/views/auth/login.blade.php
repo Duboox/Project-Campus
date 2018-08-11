@@ -13,7 +13,7 @@
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
             <div>
-                <h1 class="logo-name">AD+</h1>
+                <h1 class="logo-name">CP</h1>
             </div>
             <h3>Bienvenido a <a href="{{ url('/') }}">{{ config('app.name') }}</a></h3>
             <p>Si deseas Registrarte click <a href="{{ route('register') }}">aquí</a></p>

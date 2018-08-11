@@ -1,9 +1,9 @@
 <div class="form-group">
-  {{ Form::label('date_delivery', 'Fecha entrega') }}
-  {{ Form::date('date_delivery', null, ['class' => 'form-control', 'id' => 'date_delivery', 'placeholder' => 'Ej: Maria']) }}
-  @if ($errors->has('date_delivery'))
+  {{ Form::label('date_entry', 'Fecha ingreso') }}
+  {{ Form::date('date_entry', null, ['class' => 'form-control', 'id' => 'date_entry', 'placeholder' => 'Ej: Maria']) }}
+  @if ($errors->has('date_entry'))
       <span class="error-validate">
-          <strong>{{ $errors->first('date_delivery') }}</strong>
+          <strong>{{ $errors->first('date_entry') }}</strong>
       </span>
     @endif
 </div>
@@ -26,11 +26,20 @@
       @endif
 </div>
 <div class="form-group">
-    {{ Form::label('id_product', 'Producto') }}
+    {{ Form::label('id_product', 'Equipo') }}
     {!! Form::select('id_product', json_decode($products->pluck('name', 'id'), true), null, ['class' => 'form-control', 'id' => 'name']) !!}
     @if ($errors->has('id_product'))
         <span class="error-validate">
             <strong>{{ $errors->first('id_product') }}</strong>
+        </span>
+      @endif
+</div>
+<div class="form-group">
+    {{ Form::label('observation', 'Observación') }}
+    {!! Form::select('observation', null, ['class' => 'form-control', 'id' => 'name']) !!}
+    @if ($errors->has('observation'))
+        <span class="error-validate">
+            <strong>{{ $errors->first('observation') }}</strong>
         </span>
       @endif
 </div>

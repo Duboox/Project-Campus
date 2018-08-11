@@ -15,8 +15,9 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('date_delivery');
+            $table->date('date_entry');
             $table->date('date_return');
+            $table->string('observation');
             $table->timestamps();
             $table->softDeletes();
 

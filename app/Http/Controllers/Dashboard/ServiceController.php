@@ -46,7 +46,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::with('client', 'product.fabricator')->paginate(10);
+        $services = Service::with('client', 'product.fabricator')->orderBy('created_at', 'desc')->paginate(10);
 
         return view('dashboard.services.index', compact('services'));
     }
@@ -81,8 +81,9 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
 
+        $mytime = Carbon\Carbon::now();
         $newService = ([
-            'date_delivery' => $request->date_delivery,
+            'date_entry' => $mytime->toDateTimeString(),
             'date_return' => $request->date_return, 
             'id_client' => $request->id_client, 
             'id_product' => $request->id_product,
@@ -123,7 +124,7 @@ class ServiceController extends Controller
         $service = Service::find($id);
 
         $service->update([
-            'date_delivery' => $request->date_delivery,
+            'date_entry' => $request->date_delivery,
             'date_return' => $request->date_return, 
             'id_client' => $request->id_client, 
             'id_product' => $request->id_product

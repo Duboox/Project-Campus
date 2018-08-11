@@ -1,15 +1,15 @@
 @extends('layouts.dashboard')
-@section('title', "Creación de Producto")
+@section('title', "Creación de Equipo")
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
    <div class="col-lg-10">
-      <h2>Producto</h2>
+      <h2>Equipo</h2>
       <ol class="breadcrumb">
          <li>
             <a href="{{ route('home') }}">Home</a>
          </li>
          <li>
-            <a href="{{ route('products.index') }}">Productos</a>
+            <a href="{{ route('products.index') }}">Equipos</a>
          </li>
          <li class="active">
             <a href="#">

@@ -12,7 +12,7 @@ use PDF;
 use App\Product;
 use App\Fabricator;
 
-class ProductController extends Controller
+class CalibrationController extends Controller
 {
 
     /**
@@ -45,9 +45,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('fabricator')->orderBy('created_at', 'desc')->paginate(10);
+        $products = Product::with('fabricator')->orderBy('date_control_calibration', 'asc')->paginate(10);
 
-        return view('dashboard.products.index', compact('products'));
+        return view('dashboard.calibrations.index', compact('products'));
     }
 
     public function create()
@@ -70,6 +70,7 @@ class ProductController extends Controller
             'internal_code' => $request->internal_code, 
             'date_last_calibration' => $request->date_last_calibration, 
             'date_control_calibration' => $mytimePlusYear->toDateTimeString(),  
+            'delivery_status' => $request->delivery_status,
             'status' => $request->status,
             'others' => $request->others,
             'id_fabricator' => $request->id_fabricator,
@@ -108,13 +109,25 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
+        $mytime = Carbon\Carbon::now();
+        $mytimePlusYear = Carbon\Carbon::now()->addYear();
+
+        if ($request->status == 1 && $request->delivery_status == 1) {
+            $control_last_calibration = $mytimePlusYear;
+        } else {
+            $control_last_calibration = $mytime;
+        }
+
+        
+
         $product->update([
             'name' => $request->name,
             'model' => $request->model, 
             'serial_number' => $request->serial_number, 
             'internal_code' => $request->internal_code, 
             'date_last_calibration' => $request->date_last_calibration, 
-            'date_control_calibration' => $request->date_control_calibration,  
+            'date_control_calibration' => $control_last_calibration,  
+            'delivery_status' => $request->delivery_status,
             'status' => $request->status,
             'others' => $request->others,
             'id_fabricator' => $request->id_fabricator

@@ -35,10 +35,11 @@
                   <thead>
                      <tr>
                         <th>#ID</th>
-                        <th>Fecha entrega</th>
+                        <th>Fecha ingreso</th>
                         <th>Fecha devolución</th>
                         <th>Cliente</th>
-                        <th>Producto</th>
+                        <th>Equipo</th>
+                        <th>Observación</th>
                         <th>Registro</th>
                         <th>Opciones</th>
                         <th colspan="1">&nbsp;</th>
@@ -48,7 +49,7 @@
                   @foreach($services as $service)
                     <tr>
                       <td>{{ $service->id }}</td>
-                      <td>{{ $service->date_delivery }}</td>
+                      <td>{{ $service->date_entry }}</td>
                       <td>{{ $service->date_return }}</td>
                       @if($service->client!=null)
                         <td>{{ $service->client->name }}</td>
@@ -56,6 +57,7 @@
                       @if($service->product!=null)
                         <td>{{ $service->product->name }}</td>
                       @endif
+                      <td>{{ $service->observation }}</td>
                       <td>{{ $service->created_at->diffForHumans() }}</td>
                       @can('services.show')
                       <td width="10px">

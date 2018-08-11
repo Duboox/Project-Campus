@@ -19,8 +19,10 @@ class CreateProductsTable extends Migration
             $table->string('model');
             $table->string('serial_number');
             $table->string('internal_code');
+            $table->string('magnitude');
             $table->date('date_last_calibration');
             $table->date('date_control_calibration');
+            $table->tinyInteger('delivery_status');
             $table->tinyInteger('status');
             $table->string('others')->nullable();
             $table->timestamps();

@@ -44,6 +44,15 @@
     @endif
 </div>
 <div class="form-group">
+  {{ Form::label('magnitude', 'Magnitud') }}
+  {{ Form::text('magnitude', null, ['class' => 'form-control', 'placeholder' => 'Ej: 5.6']) }}
+  @if ($errors->has('magnitude'))
+      <span class="error-validate">
+          <strong>{{ $errors->first('magnitude') }}</strong>
+      </span>
+    @endif
+</div>
+<div class="form-group">
     {{ Form::label('date_last_calibration', 'Fecha ultima calibración') }}
     {{ Form::date('date_last_calibration', null, ['class' => 'form-control', 'id' => 'date_last_calibration', 'placeholder' => 'Ej: +58 424 233 6927']) }}
     @if ($errors->has('date_last_calibration'))

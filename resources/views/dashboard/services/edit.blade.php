@@ -32,11 +32,11 @@
                   <div class="row">
                      <div class="col-sm-12 b-r">
                         <div class="form-group">
-                           <label>Fecha entrega: (*)</label> 
-                           {{ Form::date('date_delivery', $service->date_delivery, ['class' => 'form-control']) }}
-                           @if ($errors->has('date_delivery'))
+                           <label>Fecha ingreso: (*)</label> 
+                           {{ Form::date('date_entry', $service->date_entry, ['class' => 'form-control']) }}
+                           @if ($errors->has('date_entry'))
                              <span class="error-validate">
-                                <strong>{{ $errors->first('date_delivery') }}</strong>
+                                <strong>{{ $errors->first('date_entry') }}</strong>
                              </span>
                            @endif
                         </div>
@@ -59,11 +59,20 @@
                           @endif
                         </div>
                         <div class="form-group">
-                          <label>Producto: (*)</label> 
+                          <label>Equipo: (*)</label> 
                           {!! Form::select('id_product', json_decode($products->pluck('name', 'id'), true), $service->product->id, ['class' => 'form-control', 'id' => 'name']) !!}
                           @if ($errors->has('id_product'))
                             <span class="error-validate">
                                <strong>{{ $errors->first('id_product') }}</strong>
+                            </span>
+                          @endif
+                        </div>
+                        <div class="form-group">
+                          <label>Observación: (*)</label> 
+                          {!! Form::text('observation', $service->observation, ['class' => 'form-control', 'id' => 'name']) !!}
+                          @if ($errors->has('observation'))
+                            <span class="error-validate">
+                               <strong>{{ $errors->first('observation') }}</strong>
                             </span>
                           @endif
                         </div>
