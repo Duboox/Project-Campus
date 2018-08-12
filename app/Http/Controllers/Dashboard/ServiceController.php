@@ -46,6 +46,23 @@ class ServiceController extends Controller
      */
     public function index()
     {
+        //     $productsCount = Product::count();
+            
+        //     $mytime = Carbon::now();
+
+        //     for($i=1; $i<=$productsCount; $i++) {
+        //     $newService = ([
+        //         'date_entry' => $mytime->toDateTimeString(),
+        //         'date_return' => $mytime->toDateTimeString(), 
+        //         'id_client' => $i, 
+        //         'id_product' => $i,
+        //         'observation' => 'No aplica',
+        //         'id_user' => Auth::user()->id
+        //         ]);
+
+        //     $service = Service::create($newService);
+        //  }
+
         $services = Service::with('client', 'product.fabricator')->orderBy('created_at', 'desc')->paginate(10);
 
         return view('dashboard.services.index', compact('services'));
@@ -66,6 +83,25 @@ class ServiceController extends Controller
 
         $canvas = $dom_pdf ->get_canvas();
         $canvas->page_text(10, 750, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 12, [0, 0, 0]);
+
+        return $pdf->stream();
+    }
+
+    public function certificate(Request $request, $id)
+    {
+
+        $service = Service::with('client', 'product.fabricator')->find($id);
+
+        //return view('dashboard.services.pdf.service', compact('service'));
+        
+        $pdf = PDF::loadView('dashboard.services.pdf.certificate', compact('service'));
+        
+        $pdf->output();
+        
+        $dom_pdf = $pdf->getDomPDF();
+
+        // $canvas = $dom_pdf ->get_canvas();
+        // $canvas->page_text(10, 750, "Página {PAGE_NUM} de {PAGE_COUNT}", null, 12, [0, 0, 0]);
 
         return $pdf->stream();
     }

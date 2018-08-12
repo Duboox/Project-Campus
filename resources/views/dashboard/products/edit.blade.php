@@ -105,10 +105,19 @@
                          </div>
                          <div class="form-group">
                            <label>Estado: (*)</label> 
-                           {{ Form::text('status', $product->status, ['class' => 'form-control']) }}
+                           {{ Form::select('status', array(0 => 'Equipo vencido', 1 => 'Equipo vigente'), $product->status, ['class' => 'form-control']) }}
                            @if ($errors->has('status'))
                              <span class="error-validate">
                                 <strong>{{ $errors->first('status') }}</strong>
+                             </span>
+                           @endif
+                        </div>
+                        <div class="form-group">
+                           <label>Despachado: (*)</label> 
+                           {{ Form::select('delivery_status', array(0 => 'No despachado', 1 => 'Despachado'), $product->delivery_status, ['class' => 'form-control']) }}
+                           @if ($errors->has('delivery_status'))
+                             <span class="error-validate">
+                                <strong>{{ $errors->first('delivery_status') }}</strong>
                              </span>
                            @endif
                         </div>

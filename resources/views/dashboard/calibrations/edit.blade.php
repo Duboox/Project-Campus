@@ -27,85 +27,13 @@
                <h5>Requeridos (*)</h5>
             </div>
             <div class="ibox-content">
-               {{ Form::model($product, ['route' => ['products.update', $product->id], 'method' => 'PUT']) }}
+               {{ Form::model($product, ['route' => ['calibrations.update', $product->id], 'method' => 'PUT']) }}
                <div class="ibox-content">
                   <div class="row">
                      <div class="col-sm-12 b-r">
-                        <div class="form-group">
-                           <label>Nombre: (*)</label> 
-                           {{ Form::text('name', $product->name, ['class' => 'form-control']) }}
-                           @if ($errors->has('name'))
-                             <span class="error-validate">
-                                <strong>{{ $errors->first('name') }}</strong>
-                             </span>
-                           @endif
-                        </div>
-                        <div class="form-group">
-                            <label>Fabricante: (*)</label> 
-                            {!! Form::select('id_fabricator', json_decode($fabricators->pluck('name', 'id'), true), $product->fabricator->id, ['class' => 'form-control', 'id' => 'name']) !!}
-                            @if ($errors->has('fabricator'))
-                              <span class="error-validate">
-                                 <strong>{{ $errors->first('fabricator') }}</strong>
-                              </span>
-                            @endif
-                         </div>
-                        <div class="form-group">
-                            <label>Modelo: (*)</label> 
-                            {{ Form::text('model', $product->model, ['class' => 'form-control']) }}
-                            @if ($errors->has('model'))
-                              <span class="error-validate">
-                                 <strong>{{ $errors->first('model') }}</strong>
-                              </span>
-                            @endif
-                         </div>
-                         <div class="form-group">
-                            <label>Nro Serial: (*)</label> 
-                            {{ Form::text('serial_number', $product->serial_number, ['class' => 'form-control']) }}
-                            @if ($errors->has('serial_number'))
-                              <span class="error-validate">
-                                 <strong>{{ $errors->first('serial_number') }}</strong>
-                              </span>
-                            @endif
-                         </div>
-                         <div class="form-group">
-                            <label>Cod Interno: (*)</label> 
-                            {{ Form::text('internal_code', $product->internal_code, ['class' => 'form-control']) }}
-                            @if ($errors->has('internal_code'))
-                              <span class="error-validate">
-                                 <strong>{{ $errors->first('internal_code') }}</strong>
-                              </span>
-                            @endif
-                         </div>
-                         <div class="form-group">
-                            <label>Magnitud: (*)</label> 
-                            {{ Form::text('magnitude', $product->magnitude, ['class' => 'form-control']) }}
-                            @if ($errors->has('magnitude'))
-                              <span class="error-validate">
-                                 <strong>{{ $errors->first('magnitude') }}</strong>
-                              </span>
-                            @endif
-                         </div>
-                         <div class="form-group">
-                            <label>Fecha ultima calibración: (*)</label> 
-                            {{ Form::text('date_last_calibration', $product->date_last_calibration, ['class' => 'form-control']) }}
-                            @if ($errors->has('date_last_calibration'))
-                              <span class="error-validate">
-                                 <strong>{{ $errors->first('date_last_calibration') }}</strong>
-                              </span>
-                            @endif
-                         </div>
-                         <div class="form-group">
-                            <label>Fecha aprox. control de calibración: (*)</label> 
-                            {{ Form::text('date_control_calibration', $product->date_control_calibration, ['class' => 'form-control']) }}
-                            @if ($errors->has('date_control_calibration'))
-                              <span class="error-validate">
-                                 <strong>{{ $errors->first('date_control_calibration') }}</strong>
-                              </span>
-                            @endif
-                         </div>
                          <div class="form-group">
                            <label>Estado: (*)</label> 
-                           {{ Form::text('status', $product->status, ['class' => 'form-control']) }}
+                           {{ Form::select('status', array(0 => 'Equipo vencido', 1 => 'Equipo vigente'), $product->status, ['class' => 'form-control']) }}
                            @if ($errors->has('status'))
                              <span class="error-validate">
                                 <strong>{{ $errors->first('status') }}</strong>
@@ -113,14 +41,15 @@
                            @endif
                         </div>
                         <div class="form-group">
-                            <label>Otros: </label> 
-                            {{ Form::text('others', $product->others, ['class' => 'form-control']) }}
-                            @if ($errors->has('others'))
-                              <span class="error-validate">
-                                 <strong>{{ $errors->first('others') }}</strong>
-                              </span>
-                            @endif
-                         </div>
+                           <label>Despachado: (*)</label> 
+                           {{ Form::select('delivery_status', array(0 => 'No despachado', 1 => 'Despachado'), $product->delivery_status, ['class' => 'form-control']) }}
+                           @if ($errors->has('delivery_status'))
+                             <span class="error-validate">
+                                <strong>{{ $errors->first('delivery_status') }}</strong>
+                             </span>
+                           @endif
+                        </div>
+
                         <div class="submit-button">
                            {{ Form::submit('Guardar', ['class' => 'btn btn-sm btn-primary pull-left m-t-n-xs']) }}
                         </div>

@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title', 'Equipos Registrados: '.count($products))
+@section('title', 'Equipos Registrados: '.$product_count)
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
    <div class="col-lg-10">
@@ -19,7 +19,7 @@
       <div class="col-lg-12">
          <div class="ibox float-e-margins">
             <div class="ibox-title">
-               <h5>Registrados: {{ count($products) }}</h5>
+               <h5>Registrados: {{ $product_count }}</h5>
                <div class="ibox-tools">
                     <a href="{{ route('products.create') }}" class="btn btn-primary btn-xs">Crear Equipo</a>
                 </div>
@@ -65,10 +65,10 @@
                       <td>{{ $product->date_last_calibration }}</td>
                       <td>{{ $product->date_control_calibration }}</td>
                       @if($product->status==1)
-                        <td>Calibrado</td>
+                        <td>Vigente</td>
                       @endif
                       @if($product->status==0)
-                        <td>No calibrado</td>
+                        <td>Equipo Vencido</td>
                       @endif
                       <td>{{ $product->others }}</td>
                       <td>{{ $product->created_at->diffForHumans() }}</td>

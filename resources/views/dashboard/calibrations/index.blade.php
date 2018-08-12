@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title', 'Calibración de equipos: '.count($products))
+@section('title', 'Calibración de equipos: '.$product_count)
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
    <div class="col-lg-10">
@@ -19,7 +19,7 @@
       <div class="col-lg-12">
          <div class="ibox float-e-margins">
             <div class="ibox-title">
-               <h5>Registrados: {{ count($products) }}</h5>
+               <h5>Registrados: {{ $product_count }}</h5>
                <div class="ibox-tools">
                   <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -63,10 +63,10 @@
                       <td>{{ $product->date_last_calibration }}</td>
                       <td>{{ $product->date_control_calibration }}</td>
                       @if($product->status==1)
-                        <td>Calibrado</td>
+                        <td>Vigente</td>
                       @endif
                       @if($product->status==0)
-                        <td>No calibrado</td>
+                        <td>Equipo vencido</td>
                       @endif
                       @if($product->delivery_status==1)
                         <td>Despachado</td>
@@ -78,12 +78,12 @@
                       <td>{{ $product->created_at->diffForHumans() }}</td>
                       @can('products.edit')
                       <td width="10px">
-                          <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-info">
+                          <a href="{{ route('calibrations.edit', $product->id) }}" class="btn btn-sm btn-info">
                               Editar
                           </a>
                       </td>
                       @endcan
-                      @can('products.destroy')
+                      <!-- can('products.destroy')
                       <td width="10px">
                           {{ Form::open(['route' => ['products.destroy', $product->id], 'method' => 'DELETE']) }}
                               <button class="btn btn-sm btn-danger" onclick="return confirm('Desea eliminar este producto?')">
@@ -91,16 +91,7 @@
                               </button>
                           {{ Form::close() }}
                       </td>
-                      @endcan
-                      @if($product->status==1 && $product->delivery_status==1)
-                        @can('products.show')
-                          <td width="10px">
-                              <a href="{{ route('products.show', $product->id) }}" class="btn btn-sm btn-info">
-                                  Certificado
-                              </a>
-                          </td>
-                        @endcan
-                      @endif
+                      endcan -->
                     </tr>
                      @endforeach
                 </tbody>

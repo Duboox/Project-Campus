@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title', 'Fabricantes Registrados: '.count($fabricators))
+@section('title', 'Fabricantes Registrados: '.$fabricator_count)
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
    <div class="col-lg-10">
@@ -19,7 +19,7 @@
       <div class="col-lg-12">
          <div class="ibox float-e-margins">
             <div class="ibox-title">
-               <h5>Registrados: {{ count($fabricators) }}</h5>
+               <h5>Registrados: {{ $fabricator_count }}</h5>
                <div class="ibox-tools">
                     <a href="{{ route('fabricators.create') }}" class="btn btn-primary btn-xs">Crear Fabricante</a>
                 </div>

@@ -61,6 +61,7 @@ Route::prefix('dashboard')->middleware(['auth', 'disable.back'])->group(function
 	Route::get('all/services/pdf', 'Dashboard\ServiceController@AllservicePDF')->name('all.services.pdf');
 	
 	Route::post('services/pdf/report', 'Dashboard\ServiceController@servicePDFreport')->name('services.pdf.report');
+	Route::get('services/certificate/{id}', 'Dashboard\ServiceController@certificate')->name('services.certificate');
 	Route::resource('services', 'Dashboard\ServiceController');
 
 	// Assigns

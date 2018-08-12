@@ -100,7 +100,7 @@
         font-size: 1em;
       }
 
-      .date_delivery{
+      .date_entry{
         position: absolute;
         z-index: 999;
         color: black;
@@ -113,6 +113,14 @@
         z-index: 999;
         color: black;
         top: 82%;
+        left: 10%;
+        font-size: 1em;
+      }
+      .observation{
+        position: absolute;
+        z-index: 999;
+        color: black;
+        top: 87%;
         left: 10%;
         font-size: 1em;
       }
@@ -136,7 +144,8 @@
         <p class="product_internal">{{ $service->product->internal_code }}</p>
      @endif
 
-     <p class="date_delivery">{{ $service->date_delivery }}</p>
+     <p class="date_entry">{{ $service->date_entry }}</p>
      <p class="date_return">{{ $service->date_return }}</p>
+     <p class="observation">{{ $service->observation }}</p>
    </body>
 </html>

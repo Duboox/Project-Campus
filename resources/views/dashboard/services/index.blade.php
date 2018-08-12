@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title', 'Solicitudes de Servicio Registrados: '.count($services))
+@section('title', 'Solicitudes de Servicio Registrados: '.$service_count)
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
    <div class="col-lg-10">
@@ -19,7 +19,7 @@
       <div class="col-lg-12">
          <div class="ibox float-e-margins">
             <div class="ibox-title">
-               <h5>Registrados: {{ count($services) }}</h5>
+               <h5>Registrados: {{ $service_count }}</h5>
                <div class="ibox-tools">
                     <a href="{{ route('services.create') }}" class="btn btn-primary btn-xs">Crear Solicitud</a>
                 </div>
@@ -82,6 +82,16 @@
                           {{ Form::close() }}
                       </td>
                       @endcan
+                      <!-- if($service->product->status==1 && $service->product->delivery_status==1) -->
+                      @if($service->product->status==1)
+                        @can('services.certificate')
+                          <td width="10px">
+                              <a href="{{ route('services.certificate', $service->id) }}" class="btn btn-sm btn-info">
+                                  Certificado
+                              </a>
+                          </td>
+                        @endcan
+                      @endif
                     </tr>
                     @endforeach
                 </tbody>

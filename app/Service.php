@@ -16,7 +16,7 @@ class Service extends Model
      *
      * @var array
      */
-    protected $fillable = ['date_entry', 'date_return', 'id_client', 'id_product', 'id_user'];
+    protected $fillable = ['date_entry', 'date_return', 'id_client', 'id_product', 'id_user', 'observation'];
     protected $dates = ['deleted_at'];
 
     public function client()
