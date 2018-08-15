@@ -36,7 +36,7 @@
 </div>
 <div class="form-group">
     {{ Form::label('observation', 'Observación') }}
-    {!! Form::select('observation', null, ['class' => 'form-control', 'id' => 'name']) !!}
+    {!! Form::text('observation', null, ['class' => 'form-control', 'id' => 'name']) !!}
     @if ($errors->has('observation'))
         <span class="error-validate">
             <strong>{{ $errors->first('observation') }}</strong>
