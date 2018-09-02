@@ -15,6 +15,31 @@
    </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
+<div class="row">
+      <div class="col-lg-12">
+         <div class="ibox float-e-margins">
+            <div class="ibox-title">
+               <h5>Busqueda:</h5>
+               <div class="ibox-tools">
+                  <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                  </a>
+               </div>
+            </div>
+            {{ Form::open(['route' => ['calibrations.search'], 'method' => 'GET', 'class' => 'form-inline']) }}
+               <div class="ibox-content">
+                  <div class="row">
+                        <div class="form-group">
+                        {{ Form::select('field', array('id' => 'ID', 'name' => 'Nombre', 'client' => 'Cliente', 'fabricator' => 'Fabricante', 'model' => 'Modelo', 'internal_code' => 'COD Interno'), ['class' => 'form-control', 'id' => 'field']) }}
+                        {!! Form::text('input', null, ['class' => 'form-control', 'id' => 'input']) !!}
+                        </div>
+                           {{ Form::submit('Buscar', ['class' => 'btn btn-sm btn-primary']) }}
+                  </div>
+               </div>
+               {{ Form::close() }}
+         </div>
+      </div>
+   </div>
    <div class="row">
       <div class="col-lg-12">
          <div class="ibox float-e-margins">
@@ -33,6 +58,7 @@
                      <tr>
                         <th>#ID</th>
                         <th>Nombre</th>
+                        <th>Empresa</th>
                         <th>Fabricante</th>
                         <th>Modelo</th>
                         <th>Nro Serial</th>
@@ -53,6 +79,9 @@
                     <tr>
                       <td>{{ $product->id }}</td>
                       <td>{{ $product->name }}</td>
+                      @if($product->client!=null)
+                        <td>{{ $product->client->name }}</td>
+                      @endif
                       @if($product->fabricator!=null)
                         <td>{{ $product->fabricator->name }}</td>
                       @endif

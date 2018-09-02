@@ -51,7 +51,7 @@
                          </div>
                          <div class="form-group">
                           <label>Cliente: (*)</label> 
-                          {!! Form::select('id_client', json_decode($clients->pluck('name', 'id'), true), $service->client->id, ['class' => 'form-control', 'id' => 'name']) !!}
+                          {!! Form::select('id_client', json_decode($clients->pluck('name', 'id'), true), $service->client->id, ['class' => 'form-control select2-search', 'id' => 'name']) !!}
                           @if ($errors->has('id_client'))
                             <span class="error-validate">
                                <strong>{{ $errors->first('id_client') }}</strong>
@@ -60,7 +60,7 @@
                         </div>
                         <div class="form-group">
                           <label>Equipo: (*)</label> 
-                          {!! Form::select('id_product', json_decode($products->pluck('name', 'id'), true), $service->product->id, ['class' => 'form-control', 'id' => 'name']) !!}
+                          {!! Form::select('id_product', json_decode($products->pluck('name', 'id'), true), $service->product->id, ['class' => 'form-control select2-search', 'id' => 'name']) !!}
                           @if ($errors->has('id_product'))
                             <span class="error-validate">
                                <strong>{{ $errors->first('id_product') }}</strong>

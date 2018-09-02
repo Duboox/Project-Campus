@@ -39,6 +39,8 @@ Route::prefix('dashboard')->middleware(['auth', 'disable.back'])->group(function
 	Route::post('clients/pdf/report', 'Dashboard\ClientController@userPDFreport')->name('client.pdf.report');
 	Route::resource('clients', 'Dashboard\ClientController');
 
+	Route::get('search/clients/', 'Dashboard\ClientController@search')->name('clients.search');
+
 	// Fabricators
 	Route::get('fabricators/pdf', 'Dashboard\FabricatorController@fabricatorPDFview')->name('fabricator.pdf');
 	Route::get('all/fabricators/pdf', 'Dashboard\FabricatorController@AllfabricatorPDF')->name('all.fabricator.pdf');
@@ -46,15 +48,24 @@ Route::prefix('dashboard')->middleware(['auth', 'disable.back'])->group(function
 	Route::post('fabricators/pdf/report', 'Dashboard\FabricatorController@fabricatorPDFreport')->name('fabricator.pdf.report');
 	Route::resource('fabricators', 'Dashboard\FabricatorController');
 
+	Route::get('search/fabricators/', 'Dashboard\FabricatorController@search')->name('fabricators.search');
+
 	// Products
 	Route::get('products/pdf', 'Dashboard\ProductController@productPDFview')->name('product.pdf');
 	Route::get('all/products/pdf', 'Dashboard\ProductController@AllproductPDF')->name('all.product.pdf');
 	
 	Route::post('products/pdf/report', 'Dashboard\ProductController@productPDFreport')->name('product.pdf.report');
 	Route::resource('products', 'Dashboard\ProductController');
+	Route::get('search/products/incoming/', 'Dashboard\ProductController@searchIncoming')->name('products.searchIncoming');
+	Route::get('search/products/discharged/', 'Dashboard\ProductController@searchDischarged')->name('products.searchDischarged');
 
-	// Products
+	Route::post('products/service', 'Dashboard\ProductController@service')->name('products.service');
+
+	Route::get('search/products/', 'Dashboard\ProductController@search')->name('products.search');
+
+	// Calibrations
 	Route::resource('calibrations', 'Dashboard\CalibrationController');
+	Route::get('search/calibrations/', 'Dashboard\CalibrationController@search')->name('calibrations.search');
 
 	// Request Services
 	Route::get('services/pdf', 'Dashboard\ServiceController@servicePDFview')->name('services.pdf');
@@ -63,6 +74,8 @@ Route::prefix('dashboard')->middleware(['auth', 'disable.back'])->group(function
 	Route::post('services/pdf/report', 'Dashboard\ServiceController@servicePDFreport')->name('services.pdf.report');
 	Route::get('services/certificate/{id}', 'Dashboard\ServiceController@certificate')->name('services.certificate');
 	Route::resource('services', 'Dashboard\ServiceController');
+
+	Route::get('search/services/', 'Dashboard\ServiceController@search')->name('services.search');
 
 	// Assigns
     Route::get('roles/assigns', 'Dashboard\RoleController@assigns')->name('assigns.index');

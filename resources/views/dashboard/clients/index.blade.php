@@ -15,6 +15,31 @@
    </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
+<div class="row">
+      <div class="col-lg-12">
+         <div class="ibox float-e-margins">
+            <div class="ibox-title">
+               <h5>Busqueda:</h5>
+               <div class="ibox-tools">
+                  <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                  </a>
+               </div>
+            </div>
+            {{ Form::open(['route' => ['clients.search'], 'method' => 'GET', 'class' => 'form-inline']) }}
+               <div class="ibox-content">
+                  <div class="row">
+                        <div class="form-group">
+                        {{ Form::select('field', array('id' => 'ID', 'name' => 'Empresa', 'last_name' => 'Responsable', 'city' => 'Ciudad'), ['class' => 'form-control', 'id' => 'field']) }}
+                        {!! Form::text('input', null, ['class' => 'form-control', 'id' => 'input']) !!}
+                        </div>
+                           {{ Form::submit('Buscar', ['class' => 'btn btn-sm btn-primary']) }}
+                  </div>
+               </div>
+               {{ Form::close() }}
+         </div>
+      </div>
+   </div>
    <div class="row">
       <div class="col-lg-12">
          <div class="ibox float-e-margins">
@@ -35,8 +60,8 @@
                   <thead>
                      <tr>
                         <th>#ID</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
+                        <th>Empresa</th>
+                        <th>Responsable</th>
                         <th>Ciudad</th>
                         <th>Residencia</th>
                         <th>Telefono</th>

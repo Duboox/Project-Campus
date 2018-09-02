@@ -7,10 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserValidate;
 use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use PDF;
 use App\Product;
 use App\Fabricator;
+use App\Client;
 
 class ProductController extends Controller
 {
@@ -45,23 +47,92 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('fabricator')->orderBy('created_at', 'desc')->paginate(10);
+        $products = Product::with('client', 'fabricator')->orderBy('created_at', 'desc')->paginate(10);
 
         return view('dashboard.products.index', compact('products'));
+    }
+
+    public function search() 
+    {
+        $currentYear = Carbon::now()->year;
+        $searchField =  Input::get('field');
+        $searchInput =  Input::get('input');
+        
+        if ($searchField == 'client') {
+            $products = Product::whereHas('client', function ($query) use ($searchInput) {
+                $query->where('name', 'like', '%'. $searchInput .'%');
+            })
+            ->with('client', 'fabricator')
+            ->whereYear('date_control_calibration', $currentYear)
+            ->orderBy('date_control_calibration', 'asc')
+            ->paginate(500);
+        } else if ($searchField == 'fabricator') {
+            $products = Product::whereHas('fabricator', function ($query) use ($searchInput) {
+                $query->where('name', 'like', '%'. $searchInput .'%');
+            })
+            ->with('client', 'fabricator')
+            ->whereYear('date_control_calibration', $currentYear)
+            ->orderBy('date_control_calibration', 'asc')
+            ->paginate(500);
+        } else {
+            $products = Product::with('client', 'fabricator')
+            ->where($searchField, 'like', '%'. $searchInput .'%')
+            ->whereYear('date_control_calibration', $currentYear)
+            ->orderBy('date_control_calibration', 'asc')
+            ->paginate(500);
+        }
+        
+        return view('dashboard.products.index', compact('products'));
+    }
+
+    public function searchIncoming()
+    {
+        $searchSince =  Input::get('since');
+        $searchUntil =  Input::get('until');
+        $products = Product::with('client', 'fabricator')
+        ->whereBetween('created_at', [$searchSince, $searchUntil])
+        ->where('status', '=', '0')
+        ->where('delivery_status', '=', '0')
+        ->orderBy('created_at', 'desc')->paginate(500);
+
+        return view('dashboard.products.index', compact('products'));
+    }
+
+    public function searchDischarged()
+    {
+        $searchSince =  Input::get('since');
+        $searchUntil =  Input::get('until');
+        $products = Product::with('client', 'fabricator')
+        ->whereBetween('created_at', [$searchSince, $searchUntil])
+        ->where('status', '=', '1')
+        ->where('delivery_status', '=', '1')
+        ->orderBy('created_at', 'desc')->paginate(500);
+
+        return view('dashboard.products.index', compact('products'));
+    }
+
+    public function service(Request $request)
+    {
+        $productId = $request->productID;
+
+        $product = Product::with('client', 'fabricator')->find($productId);
+
+        return view('dashboard.services.create', compact('product'));
     }
 
     public function create()
     {
         $products = Product::get();
+        $clients = Client::all(['id', 'name']);
         $fabricators = Fabricator::all(['id', 'name']);
 
-        return view('dashboard.products.create', compact('products', 'fabricators'));
+        return view('dashboard.products.create', compact('products', 'fabricators', 'clients'));
     }
 
     public function store(Request $request)
     {
 
-        $mytimePlusYear = Carbon\Carbon::now()->addYear();
+        $mytimePlusYear = Carbon::now()->addYear();
 
         $newProduct = ([
             'name' => $request->name,
@@ -69,9 +140,12 @@ class ProductController extends Controller
             'serial_number' => $request->serial_number, 
             'internal_code' => $request->internal_code, 
             'date_last_calibration' => $request->date_last_calibration, 
-            'date_control_calibration' => $mytimePlusYear->toDateTimeString(),  
+            'date_control_calibration' => $mytimePlusYear->toDateString(),  
             'status' => $request->status,
+            'delivery_status' => $request->delivery_status,
             'others' => $request->others,
+            'magnitude' => $request->magnitude,
+            'id_client' => $request->id_client,
             'id_fabricator' => $request->id_fabricator,
             'id_user' => Auth::user()->id
             ]);
@@ -91,10 +165,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::with('fabricator')->find($id);
+        $product = Product::with('client', 'fabricator')->find($id);
+        $clients = Client::all(['id', 'name']);
         $fabricators = Fabricator::all(['id', 'name']);
 
-        return view('dashboard.products.edit', compact('product', 'fabricators'));
+        return view('dashboard.products.edit', compact('product', 'fabricators', 'clients'));
     }
 
     /**
@@ -116,7 +191,9 @@ class ProductController extends Controller
             'date_last_calibration' => $request->date_last_calibration, 
             'date_control_calibration' => $request->date_control_calibration,  
             'status' => $request->status,
+            'delivery_status' => $request->delivery_status,
             'others' => $request->others,
+            'magnitude' => $request->magnitude,
             'id_fabricator' => $request->id_fabricator
             ]);
 

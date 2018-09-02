@@ -32,7 +32,7 @@
                   <div class="row">
                      <div class="col-sm-12 b-r">
                         <div class="form-group">
-                           <label>Nombre: (*)</label> 
+                           <label>Empresa: (*)</label> 
                            {{ Form::text('name', $client->name, ['class' => 'form-control']) }}
                            @if ($errors->has('name'))
                              <span class="error-validate">
@@ -41,7 +41,7 @@
                            @endif
                         </div>
                         <div class="form-group">
-                            <label>Apellido: (*)</label> 
+                            <label>Responsable: (*)</label> 
                             {{ Form::text('last_name', $client->last_name, ['class' => 'form-control']) }}
                             @if ($errors->has('last_name'))
                               <span class="error-validate">

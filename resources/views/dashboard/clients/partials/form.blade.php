@@ -1,5 +1,5 @@
 <div class="form-group">
-  {{ Form::label('name', 'Nombre') }}
+  {{ Form::label('name', 'Empresa') }}
   {{ Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'Ej: Maria']) }}
   @if ($errors->has('name'))
       <span class="error-validate">
@@ -8,7 +8,7 @@
     @endif
 </div>
 <div class="form-group">
-    {{ Form::label('last_name', 'Apellido') }}
+    {{ Form::label('last_name', 'Responsable') }}
     {{ Form::text('last_name', null, ['class' => 'form-control', 'id' => 'last_name', 'placeholder' => 'Ej: Suarez']) }}
     @if ($errors->has('last_name'))
         <span class="error-validate">

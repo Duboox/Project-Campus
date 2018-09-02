@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserValidate;
 use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use PDF;
 use App\Product;
@@ -47,10 +48,43 @@ class CalibrationController extends Controller
     {
         $currentYear = Carbon::now()->year;
 
-        $products = Product::with('fabricator')
+        $products = Product::with('client', 'fabricator')
         ->whereYear('date_control_calibration', $currentYear)
         ->orderBy('date_control_calibration', 'asc')->paginate(10);
 
+        return view('dashboard.calibrations.index', compact('products'));
+    }
+
+    public function search() 
+    {
+        $currentYear = Carbon::now()->year;
+        $searchField =  Input::get('field');
+        $searchInput =  Input::get('input');
+        
+        if ($searchField == 'client') {
+            $products = Product::whereHas('client', function ($query) use ($searchInput) {
+                $query->where('name', 'like', '%'. $searchInput .'%');
+            })
+            ->with('client', 'fabricator')
+            ->whereYear('date_control_calibration', $currentYear)
+            ->orderBy('date_control_calibration', 'asc')
+            ->paginate(500);
+        } else if ($searchField == 'fabricator') {
+            $products = Product::whereHas('fabricator', function ($query) use ($searchInput) {
+                $query->where('name', 'like', '%'. $searchInput .'%');
+            })
+            ->with('client', 'fabricator')
+            ->whereYear('date_control_calibration', $currentYear)
+            ->orderBy('date_control_calibration', 'asc')
+            ->paginate(500);
+        } else {
+            $products = Product::with('client', 'fabricator')
+            ->where($searchField, 'like', '%'. $searchInput .'%')
+            ->whereYear('date_control_calibration', $currentYear)
+            ->orderBy('date_control_calibration', 'asc')
+            ->paginate(500);
+        }
+        
         return view('dashboard.calibrations.index', compact('products'));
     }
 

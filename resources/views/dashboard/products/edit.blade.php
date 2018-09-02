@@ -41,11 +41,20 @@
                            @endif
                         </div>
                         <div class="form-group">
-                            <label>Fabricante: (*)</label> 
-                            {!! Form::select('id_fabricator', json_decode($fabricators->pluck('name', 'id'), true), $product->fabricator->id, ['class' => 'form-control', 'id' => 'name']) !!}
-                            @if ($errors->has('fabricator'))
+                            <label>Empresa: (*)</label> 
+                            {!! Form::select('id_client', json_decode($clients->pluck('name', 'id'), true), $product->client->id, ['class' => 'form-control select2-search', 'id' => 'name']) !!}
+                            @if ($errors->has('id_client'))
                               <span class="error-validate">
-                                 <strong>{{ $errors->first('fabricator') }}</strong>
+                                 <strong>{{ $errors->first('id_client') }}</strong>
+                              </span>
+                            @endif
+                         </div>
+                        <div class="form-group">
+                            <label>Fabricante: (*)</label> 
+                            {!! Form::select('id_fabricator', json_decode($fabricators->pluck('name', 'id'), true), $product->fabricator->id, ['class' => 'form-control select2-search', 'id' => 'name']) !!}
+                            @if ($errors->has('id_fabricator'))
+                              <span class="error-validate">
+                                 <strong>{{ $errors->first('id_fabricator') }}</strong>
                               </span>
                             @endif
                          </div>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserValidate;
 use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use PDF;
 use App\Fabricator;
@@ -46,6 +47,20 @@ class FabricatorController extends Controller
     {
         $fabricators = Fabricator::orderBy('created_at', 'desc')->paginate(10);
 
+        return view('dashboard.fabricators.index', compact('fabricators'));
+    }
+
+    public function search() 
+    {
+        $currentYear = Carbon::now()->year;
+        $searchField =  Input::get('field');
+        $searchInput =  Input::get('input');
+
+
+            $fabricators = Fabricator::where($searchField, 'like', '%'. $searchInput .'%')
+            ->orderBy('created_at', 'asc')
+            ->paginate(500);
+        
         return view('dashboard.fabricators.index', compact('fabricators'));
     }
 

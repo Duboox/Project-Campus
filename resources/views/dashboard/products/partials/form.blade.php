@@ -8,8 +8,17 @@
     @endif
 </div>
 <div class="form-group">
+        {{ Form::label('id_client', 'Empresa') }}
+        {!! Form::select('id_client', json_decode($clients->pluck('name', 'id'), true), null, ['class' => 'form-control select2-search', 'id' => 'name']) !!}
+        @if ($errors->has('id_client'))
+            <span class="error-validate">
+                <strong>{{ $errors->first('id_client') }}</strong>
+            </span>
+          @endif
+</div>
+<div class="form-group">
         {{ Form::label('id_fabricator', 'Fabricante') }}
-        {!! Form::select('id_fabricator', json_decode($fabricators->pluck('name', 'id'), true), null, ['class' => 'form-control', 'id' => 'name']) !!}
+        {!! Form::select('id_fabricator', json_decode($fabricators->pluck('name', 'id'), true), null, ['class' => 'form-control select2-search', 'id' => 'name']) !!}
         @if ($errors->has('id_fabricator'))
             <span class="error-validate">
                 <strong>{{ $errors->first('id_fabricator') }}</strong>
@@ -71,8 +80,17 @@
     @endif
 </div>
 <div class="form-group">
+    {{ Form::label('delivery_status', 'Despachado') }}
+    {{ Form::select('delivery_status', array(0 => 'No despachado', 1 => 'Despachado'), null, ['class' => 'form-control']) }}
+    @if ($errors->has('delivery_status'))
+        <span class="error-validate">
+            <strong>{{ $errors->first('delivery_status') }}</strong>
+        </span>
+    @endif
+</div>
+<div class="form-group">
     {{ Form::label('status', 'Estado') }}
-    {{ Form::text('status', null, ['class' => 'form-control', 'id' => 'status', 'placeholder' => 'Ej: skynessj@gmail.com']) }}
+    {{ Form::select('status', array(0 => 'Equipo vencido', 1 => 'Equipo vigente'), null, ['class' => 'form-control']) }}
     @if ($errors->has('status'))
         <span class="error-validate">
             <strong>{{ $errors->first('status') }}</strong>

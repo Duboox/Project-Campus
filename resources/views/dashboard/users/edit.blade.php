@@ -54,7 +54,6 @@
                                 <option value="{{ $data[0]->roles[0]->id }}" selected>{{ $data[0]->roles[0]->name }}</option>
                               </optgroup>
                             @endif
-                            <option value="">Seleccione</option>
                             <optgroup label="Roles Disponibles">
                               @foreach($data[1] as $role)
                                 <option value="{{ $role->id }}">{{ $role->name }}</option>

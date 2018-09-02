@@ -1,12 +1,49 @@
-<div class="form-group">
-  {{ Form::label('date_entry', 'Fecha ingreso') }}
-  {{ Form::date('date_entry', null, ['class' => 'form-control', 'id' => 'date_entry', 'placeholder' => 'Ej: Maria']) }}
-  @if ($errors->has('date_entry'))
-      <span class="error-validate">
-          <strong>{{ $errors->first('date_entry') }}</strong>
-      </span>
-    @endif
+ <div class="form-group">
+    {{ Form::label('product', 'Equipo') }}
+    {!! Form::text('product', $product->name, ['class' => 'form-control', 'id' => 'name', 'disabled' => 'disabled']) !!}
+    @if ($errors->has('product'))
+        <span class="error-validate">
+            <strong>{{ $errors->first('product') }}</strong>
+        </span>
+      @endif
 </div>
+<div class="form-group">
+    {{ Form::label('product_model', 'Modelo equipo') }}
+    {!! Form::text('product_model', $product->model, ['class' => 'form-control', 'id' => 'name', 'disabled' => 'disabled']) !!}
+    @if ($errors->has('product_model'))
+        <span class="error-validate">
+            <strong>{{ $errors->first('product_model') }}</strong>
+        </span>
+      @endif
+</div>
+<div class="form-group">
+    {{ Form::label('product_serial', 'Serial equipo') }}
+    {!! Form::text('product_serial', $product->serial_number, ['class' => 'form-control', 'id' => 'name', 'disabled' => 'disabled']) !!}
+    @if ($errors->has('product_serial'))
+        <span class="error-validate">
+            <strong>{{ $errors->first('product_serial') }}</strong>
+        </span>
+      @endif
+</div>
+<div class="form-group">
+    {{ Form::label('internal_code', 'COD interno equipo') }}
+    {!! Form::text('internal_code', $product->internal_code, ['class' => 'form-control', 'id' => 'name', 'disabled' => 'disabled']) !!}
+    @if ($errors->has('internal_code'))
+        <span class="error-validate">
+            <strong>{{ $errors->first('internal_code') }}</strong>
+        </span>
+      @endif
+</div>
+<div class="form-group">
+    {{ Form::label('client', 'Cliente') }}
+    {!! Form::text('client', $product->client->name, ['class' => 'form-control', 'id' => 'name', 'disabled' => 'disabled']) !!}
+    @if ($errors->has('client'))
+        <span class="error-validate">
+            <strong>{{ $errors->first('client') }}</strong>
+        </span>
+      @endif
+</div>
+
 <div class="form-group">
     {{ Form::label('date_return', 'Fecha devolución') }}
     {{ Form::date('date_return', null, ['class' => 'form-control', 'id' => 'date_return', 'placeholder' => 'Ej: Suarez']) }}
@@ -16,24 +53,6 @@
         </span>
       @endif
   </div>
-  <div class="form-group">
-    {{ Form::label('id_client', 'Cliente') }}
-    {!! Form::select('id_client', json_decode($clients->pluck('name', 'id'), true), null, ['class' => 'form-control', 'id' => 'name']) !!}
-    @if ($errors->has('id_client'))
-        <span class="error-validate">
-            <strong>{{ $errors->first('id_client') }}</strong>
-        </span>
-      @endif
-</div>
-<div class="form-group">
-    {{ Form::label('id_product', 'Equipo') }}
-    {!! Form::select('id_product', json_decode($products->pluck('name', 'id'), true), null, ['class' => 'form-control', 'id' => 'name']) !!}
-    @if ($errors->has('id_product'))
-        <span class="error-validate">
-            <strong>{{ $errors->first('id_product') }}</strong>
-        </span>
-      @endif
-</div>
 <div class="form-group">
     {{ Form::label('observation', 'Observación') }}
     {!! Form::text('observation', null, ['class' => 'form-control', 'id' => 'name']) !!}

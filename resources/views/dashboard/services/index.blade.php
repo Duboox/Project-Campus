@@ -15,14 +15,39 @@
    </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
+<div class="row">
+      <div class="col-lg-12">
+         <div class="ibox float-e-margins">
+            <div class="ibox-title">
+               <h5>Busqueda:</h5>
+               <div class="ibox-tools">
+                  <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                  </a>
+               </div>
+            </div>
+            {{ Form::open(['route' => ['services.search'], 'method' => 'GET', 'class' => 'form-inline']) }}
+               <div class="ibox-content">
+                  <div class="row">
+                        <div class="form-group">
+                        {{ Form::select('field', array('id' => 'ID', 'client' => 'Cliente', 'product' => 'Equipo'), ['class' => 'form-control', 'id' => 'field']) }}
+                        {!! Form::text('input', null, ['class' => 'form-control', 'id' => 'input']) !!}
+                        </div>
+                           {{ Form::submit('Buscar', ['class' => 'btn btn-sm btn-primary']) }}
+                  </div>
+               </div>
+               {{ Form::close() }}
+         </div>
+      </div>
+   </div>
    <div class="row">
       <div class="col-lg-12">
          <div class="ibox float-e-margins">
             <div class="ibox-title">
                <h5>Registrados: {{ $service_count }}</h5>
-               <div class="ibox-tools">
+               <!-- <div class="ibox-tools">
                     <a href="{{ route('services.create') }}" class="btn btn-primary btn-xs">Crear Solicitud</a>
-                </div>
+                </div> -->
                <div class="ibox-tools">
                   <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>

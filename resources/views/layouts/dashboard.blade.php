@@ -16,6 +16,7 @@
     {{ Html::style('tmpl_dashboard/font-awesome/css/font-awesome.css') }}
     <!-- Toastr style -->
     {{ css_plugin('toastr', 'toastr.min') }}
+    {{ css_plugin('select2', 'select2.min') }}
     {{ css('animate') }}
     {{ css('template') }}
     @show
@@ -106,6 +107,9 @@
     
     <!-- Toastr -->
     {{ js_plugin('toastr', 'toastr.min') }}
+
+    <!-- Select2 -->
+    {{ js_plugin('select2', 'select2.full.min') }}
 
     {{ js('template') }}
     {{ js('template-dashboard') }}

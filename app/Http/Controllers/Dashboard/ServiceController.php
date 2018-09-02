@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserValidate;
 use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use PDF;
 use App\Service;
@@ -46,25 +47,61 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //     $productsCount = Product::count();
+            //  $products = Product::with('client', 'fabricator')->get();
             
-        //     $mytime = Carbon::now();
+            //  $mytime = Carbon::now();
 
-        //     for($i=1; $i<=$productsCount; $i++) {
-        //     $newService = ([
-        //         'date_entry' => $mytime->toDateTimeString(),
-        //         'date_return' => $mytime->toDateTimeString(), 
-        //         'id_client' => $i, 
-        //         'id_product' => $i,
-        //         'observation' => 'No aplica',
-        //         'id_user' => Auth::user()->id
-        //         ]);
+            //  foreach ($products as $product) {
+            //     $newService = ([
+            //         'date_entry' => $mytime->toDateTimeString(),
+            //         'date_return' => $mytime->toDateTimeString(), 
+            //         'id_client' => $product->client->id, 
+            //         'id_product' => $product->id,
+            //         'observation' => 'No aplica',
+            //         'id_user' => Auth::user()->id
+            //     ]);
+            //     $service = Service::create($newService);
+            //  }
 
-        //     $service = Service::create($newService);
-        //  }
 
-        $services = Service::with('client', 'product.fabricator')->orderBy('created_at', 'desc')->paginate(10);
+         $services = Service::with(['product' => function ($query) {
+             $query->where('delivery_status', '=', '0');
+         }])
+        ->with('client', 'product.fabricator')
+        ->orderBy('created_at', 'desc')
+        ->paginate(10);
 
+         return view('dashboard.services.index', compact('services'));
+    }
+
+
+    public function search() 
+    {
+        $currentYear = Carbon::now()->year;
+        $searchField =  Input::get('field');
+        $searchInput =  Input::get('input');
+        
+        if ($searchField == 'client') {
+            $services = Service::whereHas('client', function ($query) use ($searchInput) {
+                $query->where('name', 'like', '%'. $searchInput .'%');
+            })
+            ->with('client', 'product')
+            ->orderBy('created_at', 'asc')
+            ->paginate(500);
+        } else if ($searchField == 'product') {
+            $services = Service::whereHas('product', function ($query) use ($searchInput) {
+                $query->where('name', 'like', '%'. $searchInput .'%');
+            })
+            ->with('client', 'product')
+            ->orderBy('created_at', 'asc')
+            ->paginate(500);
+        } else {
+            $services = Service::with('client', 'product')
+            ->where($searchField, 'like', '%'. $searchInput .'%')
+            ->orderBy('created_at', 'asc')
+            ->paginate(500);
+        }
+        
         return view('dashboard.services.index', compact('services'));
     }
 
@@ -116,13 +153,15 @@ class ServiceController extends Controller
 
     public function store(Request $request)
     {
+        $product = Product::with('client', 'fabricator')->find($request->productID);
 
-        $mytime = Carbon\Carbon::now();
+        $mytime = Carbon::now();
         $newService = ([
             'date_entry' => $mytime->toDateTimeString(),
             'date_return' => $request->date_return, 
-            'id_client' => $request->id_client, 
-            'id_product' => $request->id_product,
+            'id_client' => $product->client->id, 
+            'id_product' => $product->id,
+            'observation' => $request->observation,
             'id_user' => Auth::user()->id
             ]);
 

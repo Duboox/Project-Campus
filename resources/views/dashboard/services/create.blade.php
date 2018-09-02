@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    {{ Form::open(['route' => 'services.store']) }}
+                    {{ Form::open(['route' => ['services.store', 'productID' => $product->id], 'method' => 'POST']) }}
                       @include('dashboard.services.partials.form')
                     {{ Form::close() }}
                 </div>

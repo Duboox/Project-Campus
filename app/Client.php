@@ -18,4 +18,9 @@ class Client extends Model
      */
     protected $fillable = ['name', 'last_name', 'city', 'residency', 'phone', 'fax', 'email', 'id_user'];
     protected $dates = ['deleted_at'];
+
+    public function product()
+    {
+        return $this->hasMany('App\Product', 'id_client', 'id');
+    }
 }
