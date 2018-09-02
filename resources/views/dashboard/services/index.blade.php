@@ -30,7 +30,7 @@
                <div class="ibox-content">
                   <div class="row">
                         <div class="form-group">
-                        {{ Form::select('field', array('id' => 'ID', 'client' => 'Cliente', 'product' => 'Equipo'), ['class' => 'form-control', 'id' => 'field']) }}
+                        {{ Form::select('field', array('id' => 'ID', 'client' => 'Empresa', 'product' => 'Equipo'), ['class' => 'form-control', 'id' => 'field']) }}
                         {!! Form::text('input', null, ['class' => 'form-control', 'id' => 'input']) !!}
                         </div>
                            {{ Form::submit('Buscar', ['class' => 'btn btn-sm btn-primary']) }}
@@ -62,7 +62,7 @@
                         <th>#ID</th>
                         <th>Fecha ingreso</th>
                         <th>Fecha devolución</th>
-                        <th>Cliente</th>
+                        <th>Empresa</th>
                         <th>Equipo</th>
                         <th>Observación</th>
                         <th>Registro</th>
