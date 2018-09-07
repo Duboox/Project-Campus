@@ -96,7 +96,7 @@
                          </div>
                          <div class="form-group">
                             <label>Fecha ultima calibración: (*)</label> 
-                            {{ Form::text('date_last_calibration', $product->date_last_calibration, ['class' => 'form-control']) }}
+                            {{ Form::date('date_last_calibration', $product->date_last_calibration, ['class' => 'form-control']) }}
                             @if ($errors->has('date_last_calibration'))
                               <span class="error-validate">
                                  <strong>{{ $errors->first('date_last_calibration') }}</strong>
@@ -105,7 +105,7 @@
                          </div>
                          <div class="form-group">
                             <label>Fecha aprox. control de calibración: (*)</label> 
-                            {{ Form::text('date_control_calibration', $product->date_control_calibration, ['class' => 'form-control']) }}
+                            {{ Form::date('date_control_calibration', $product->date_control_calibration, ['class' => 'form-control']) }}
                             @if ($errors->has('date_control_calibration'))
                               <span class="error-validate">
                                  <strong>{{ $errors->first('date_control_calibration') }}</strong>

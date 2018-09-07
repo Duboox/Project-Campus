@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
-@section('title', 'Cliente: '.$client->name)
+@section('title', 'Empresa: '.$client->name)
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
    <div class="col-lg-10">
@@ -9,7 +9,7 @@
             <a href="{{ route('home') }}">Inicio</a>
          </li>
          <li>
-            <a href="{{ route('clients.index') }}">Clientes</a>
+            <a href="{{ route('clients.index') }}">Empresas</a>
          </li>
          <li class="active">
             <a href="#">

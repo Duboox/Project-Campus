@@ -1,15 +1,15 @@
 @extends('layouts.dashboard')
-@section('title', "Creación de Cliente")
+@section('title', "Creación de Empresa")
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
    <div class="col-lg-10">
-      <h2>Cliente</h2>
+      <h2>Empresa</h2>
       <ol class="breadcrumb">
          <li>
             <a href="{{ route('home') }}">Home</a>
          </li>
          <li>
-            <a href="{{ route('clients.index') }}">Clientes</a>
+            <a href="{{ route('clients.index') }}">Empresas</a>
          </li>
          <li class="active">
             <a href="#">
@@ -24,7 +24,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Creación de Cliente</h5>
+                    <h5>Creación de Empresa</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>

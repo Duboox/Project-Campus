@@ -47,14 +47,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('client', 'fabricator')->orderBy('created_at', 'desc')->paginate(10);
+        $products = Product::with('client', 'fabricator')->orderBy('id', 'desc')->paginate(10);
 
         return view('dashboard.products.index', compact('products'));
     }
 
     public function search() 
     {
-        $currentYear = Carbon::now()->year;
         $searchField =  Input::get('field');
         $searchInput =  Input::get('input');
         
@@ -63,22 +62,19 @@ class ProductController extends Controller
                 $query->where('name', 'like', '%'. $searchInput .'%');
             })
             ->with('client', 'fabricator')
-            ->whereYear('date_control_calibration', $currentYear)
-            ->orderBy('date_control_calibration', 'asc')
+            ->orderBy('id', 'desc')
             ->paginate(500);
         } else if ($searchField == 'fabricator') {
             $products = Product::whereHas('fabricator', function ($query) use ($searchInput) {
                 $query->where('name', 'like', '%'. $searchInput .'%');
             })
             ->with('client', 'fabricator')
-            ->whereYear('date_control_calibration', $currentYear)
-            ->orderBy('date_control_calibration', 'asc')
+            ->orderBy('id', 'desc')
             ->paginate(500);
         } else {
             $products = Product::with('client', 'fabricator')
             ->where($searchField, 'like', '%'. $searchInput .'%')
-            ->whereYear('date_control_calibration', $currentYear)
-            ->orderBy('date_control_calibration', 'asc')
+            ->orderBy('id', 'desc')
             ->paginate(500);
         }
         

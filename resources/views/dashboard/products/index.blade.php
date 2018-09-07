@@ -30,7 +30,7 @@
                <div class="ibox-content">
                   <div class="row">
                         <div class="form-group">
-                        {{ Form::select('field', array('id' => 'ID', 'name' => 'Nombre', 'client' => 'Empresa', 'fabricator' => 'Fabricante', 'model' => 'Modelo', 'internal_code' => 'COD Interno'), ['class' => 'form-control', 'id' => 'field']) }}
+                        {{ Form::select('field', array('id' => 'ID', 'name' => 'Nombre', 'client' => 'Empresa', 'fabricator' => 'Fabricante', 'model' => 'Modelo', 'serial_number' => 'Nro Serial', 'internal_code' => 'COD Interno'), ['class' => 'form-control', 'id' => 'field']) }}
                         {!! Form::text('input', null, ['class' => 'form-control', 'id' => 'input']) !!}
                         </div>
                            {{ Form::submit('Buscar', ['class' => 'btn btn-sm btn-primary']) }}

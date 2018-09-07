@@ -45,7 +45,7 @@ class FabricatorController extends Controller
      */
     public function index()
     {
-        $fabricators = Fabricator::orderBy('created_at', 'desc')->paginate(10);
+        $fabricators = Fabricator::orderBy('id', 'desc')->paginate(10);
 
         return view('dashboard.fabricators.index', compact('fabricators'));
     }

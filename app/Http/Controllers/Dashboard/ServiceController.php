@@ -68,7 +68,7 @@ class ServiceController extends Controller
              $query->where('delivery_status', '=', '0');
          }])
         ->with('client', 'product.fabricator')
-        ->orderBy('created_at', 'desc')
+        ->orderBy('id', 'desc')
         ->paginate(10);
 
          return view('dashboard.services.index', compact('services'));

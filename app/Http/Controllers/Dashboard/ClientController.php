@@ -45,7 +45,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::orderBy('created_at', 'desc')->paginate(10);
+        $clients = Client::orderBy('id', 'desc')->paginate(10);
 
         return view('dashboard.clients.index', compact('clients'));
     }

@@ -21,9 +21,9 @@
             </div>
             <div class="ibox-content table-responsive">
                 <a href="{{ route('services.index') }}" class="btn btn-sm btn-info"> Solicitudes </a>
-                <a href="{{ route('clients.index') }}" class="btn btn-sm btn-info"> Clientes </a>
+                <a href="{{ route('clients.index') }}" class="btn btn-sm btn-info"> Empresas </a>
                 <a href="{{ route('fabricators.index') }}" class="btn btn-sm btn-info"> Fabricantes </a>
-                <a href="{{ route('products.index') }}" class="btn btn-sm btn-info"> Productos </a>
+                <a href="{{ route('products.index') }}" class="btn btn-sm btn-info"> Equipos </a>
                 <a href="{{ route('calibrations.index') }}" class="btn btn-sm btn-info"> Control de calibraciones </a>
             </div>
          </div>
