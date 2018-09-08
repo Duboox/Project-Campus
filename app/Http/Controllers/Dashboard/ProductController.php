@@ -56,26 +56,30 @@ class ProductController extends Controller
     {
         $searchField =  Input::get('field');
         $searchInput =  Input::get('input');
-        
-        if ($searchField == 'client') {
-            $products = Product::whereHas('client', function ($query) use ($searchInput) {
-                $query->where('name', 'like', '%'. $searchInput .'%');
-            })
-            ->with('client', 'fabricator')
-            ->orderBy('id', 'desc')
-            ->paginate(500);
-        } else if ($searchField == 'fabricator') {
-            $products = Product::whereHas('fabricator', function ($query) use ($searchInput) {
-                $query->where('name', 'like', '%'. $searchInput .'%');
-            })
-            ->with('client', 'fabricator')
-            ->orderBy('id', 'desc')
-            ->paginate(500);
+
+        if (empty($searchInput)) {
+            $products = Product::with('client', 'fabricator')->orderBy('id', 'desc')->paginate(10);
         } else {
-            $products = Product::with('client', 'fabricator')
-            ->where($searchField, 'like', '%'. $searchInput .'%')
-            ->orderBy('id', 'desc')
-            ->paginate(500);
+            if ($searchField == 'client') {
+                $products = Product::whereHas('client', function ($query) use ($searchInput) {
+                    $query->where('name', 'like', '%'. $searchInput .'%');
+                })
+                ->with('client', 'fabricator')
+                ->orderBy('id', 'desc')
+                ->paginate(500);
+            } else if ($searchField == 'fabricator') {
+                $products = Product::whereHas('fabricator', function ($query) use ($searchInput) {
+                    $query->where('name', 'like', '%'. $searchInput .'%');
+                })
+                ->with('client', 'fabricator')
+                ->orderBy('id', 'desc')
+                ->paginate(500);
+            } else {
+                $products = Product::with('client', 'fabricator')
+                ->where($searchField, 'like', '%'. $searchInput .'%')
+                ->orderBy('id', 'desc')
+                ->paginate(500);
+            }
         }
         
         return view('dashboard.products.index', compact('products'));
@@ -87,9 +91,11 @@ class ProductController extends Controller
         $searchUntil =  Input::get('until');
         $products = Product::with('client', 'fabricator')
         ->whereBetween('created_at', [$searchSince, $searchUntil])
-        ->where('status', '=', '0')
-        ->where('delivery_status', '=', '0')
-        ->orderBy('created_at', 'desc')->paginate(500);
+        ->where([
+            ['status', '=', '0'],
+            // ['delivery_status', '=', '0']
+        ])
+        ->orderBy('id', 'desc')->paginate(500);
 
         return view('dashboard.products.index', compact('products'));
     }
@@ -101,8 +107,8 @@ class ProductController extends Controller
         $products = Product::with('client', 'fabricator')
         ->whereBetween('created_at', [$searchSince, $searchUntil])
         ->where('status', '=', '1')
-        ->where('delivery_status', '=', '1')
-        ->orderBy('created_at', 'desc')->paginate(500);
+        // ->where('delivery_status', '=', '1')
+        ->orderBy('id', 'desc')->paginate(500);
 
         return view('dashboard.products.index', compact('products'));
     }
@@ -127,6 +133,18 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'model' => 'required', 
+            'serial_number' => 'required', 
+            'internal_code' => 'required', 
+            'date_last_calibration' => 'required',
+            'status' => 'required',
+            'delivery_status' => 'required',
+            'magnitude' => 'required',
+            'id_client' => 'required',
+            'id_fabricator' => 'required',
+        ]);
 
         $mytimePlusYear = Carbon::now()->addYear();
 
@@ -149,7 +167,7 @@ class ProductController extends Controller
         $product = Product::create($newProduct);
 
         return save_response($product, 'products.index', 
-            'Producto creado éxitosamente!!!'
+            'Equipo creado éxitosamente!!!'
         ); 
     }
 
@@ -177,6 +195,19 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required',
+            'model' => 'required', 
+            'serial_number' => 'required', 
+            'internal_code' => 'required', 
+            'date_last_calibration' => 'required',
+            'status' => 'required',
+            'delivery_status' => 'required',
+            'magnitude' => 'required',
+            'id_client' => 'required',
+            'id_fabricator' => 'required',
+        ]);
+        
         $product = Product::find($id);
 
         $product->update([
@@ -194,7 +225,7 @@ class ProductController extends Controller
             ]);
 
         return save_response($product, 'products.index', 
-            'Producto actualizado éxitosamente!!!'
+            'Equipo actualizado éxitosamente!!!'
         ); 
     }
 
@@ -211,7 +242,7 @@ class ProductController extends Controller
         $product->delete();
 
         return save_response($product, 'products.index', 
-            'Producto eliminado éxitosamente!!!'
+            'Equipo eliminado éxitosamente!!!'
         ); 
     }
 

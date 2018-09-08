@@ -80,26 +80,35 @@ class ServiceController extends Controller
         $currentYear = Carbon::now()->year;
         $searchField =  Input::get('field');
         $searchInput =  Input::get('input');
-        
-        if ($searchField == 'client') {
-            $services = Service::whereHas('client', function ($query) use ($searchInput) {
-                $query->where('name', 'like', '%'. $searchInput .'%');
-            })
-            ->with('client', 'product')
-            ->orderBy('created_at', 'asc')
-            ->paginate(500);
-        } else if ($searchField == 'product') {
-            $services = Service::whereHas('product', function ($query) use ($searchInput) {
-                $query->where('name', 'like', '%'. $searchInput .'%');
-            })
-            ->with('client', 'product')
-            ->orderBy('created_at', 'asc')
-            ->paginate(500);
+
+        if (empty($searchInput)) {
+            $services = Service::with(['product' => function ($query) {
+                $query->where('delivery_status', '=', '0');
+            }])
+           ->with('client', 'product.fabricator')
+           ->orderBy('id', 'desc')
+           ->paginate(10);
         } else {
-            $services = Service::with('client', 'product')
-            ->where($searchField, 'like', '%'. $searchInput .'%')
-            ->orderBy('created_at', 'asc')
-            ->paginate(500);
+            if ($searchField == 'client') {
+                $services = Service::whereHas('client', function ($query) use ($searchInput) {
+                    $query->where('name', 'like', '%'. $searchInput .'%');
+                })
+                ->with('client', 'product')
+                ->orderBy('created_at', 'asc')
+                ->paginate(500);
+            } else if ($searchField == 'product') {
+                $services = Service::whereHas('product', function ($query) use ($searchInput) {
+                    $query->where('name', 'like', '%'. $searchInput .'%');
+                })
+                ->with('client', 'product')
+                ->orderBy('created_at', 'asc')
+                ->paginate(500);
+            } else {
+                $services = Service::with('client', 'product')
+                ->where($searchField, 'like', '%'. $searchInput .'%')
+                ->orderBy('created_at', 'asc')
+                ->paginate(500);
+            }
         }
         
         return view('dashboard.services.index', compact('services'));
@@ -153,6 +162,11 @@ class ServiceController extends Controller
 
     public function store(Request $request)
     {
+
+        $request->validate([
+            'date_return' => 'required',
+        ]);
+
         $product = Product::with('client', 'fabricator')->find($request->productID);
 
         $mytime = Carbon::now();

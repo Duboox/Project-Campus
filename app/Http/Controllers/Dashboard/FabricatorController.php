@@ -56,10 +56,13 @@ class FabricatorController extends Controller
         $searchField =  Input::get('field');
         $searchInput =  Input::get('input');
 
-
+        if (empty($searchInput)) {
+            $fabricators = Fabricator::orderBy('id', 'desc')->paginate(10);
+        } else {
             $fabricators = Fabricator::where($searchField, 'like', '%'. $searchInput .'%')
             ->orderBy('created_at', 'asc')
             ->paginate(500);
+        }
         
         return view('dashboard.fabricators.index', compact('fabricators'));
     }
@@ -73,6 +76,10 @@ class FabricatorController extends Controller
 
     public function store(Request $request)
     {
+
+        $request->validate([
+            'name' => 'required',
+        ]);
 
         $newFabricator = ([
             'name' => $request->name,

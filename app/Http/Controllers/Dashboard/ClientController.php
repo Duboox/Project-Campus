@@ -55,11 +55,15 @@ class ClientController extends Controller
         $currentYear = Carbon::now()->year;
         $searchField =  Input::get('field');
         $searchInput =  Input::get('input');
-        
+
+        if (empty($searchInput)) {
+            $clients = Client::orderBy('id', 'desc')->paginate(10);
+        } else {
             $clients = Client::where($searchField, 'like', '%'. $searchInput .'%')
             ->orderBy('created_at', 'asc')
             ->paginate(500);
-        
+        }
+            
         return view('dashboard.clients.index', compact('clients'));
     }
 
@@ -72,6 +76,10 @@ class ClientController extends Controller
 
     public function store(Request $request)
     {
+
+        $request->validate([
+            'name' => 'required',
+        ]);
 
         $newClient = ([
             'name' => $request->name,
@@ -126,7 +134,7 @@ class ClientController extends Controller
             ]);
 
         return save_response($client, 'clients.index', 
-            'Cliente actualizado éxitosamente!!!'
+            'Empresa actualizada éxitosamente!!!'
         ); 
     }
 
@@ -143,7 +151,7 @@ class ClientController extends Controller
         $client->delete();
 
         return save_response($client, 'clients.index', 
-            'Cliente eliminado éxitosamente!!!'
+            'Empresa eliminada éxitosamente!!!'
         ); 
     }
 

@@ -60,29 +60,35 @@ class CalibrationController extends Controller
         $currentYear = Carbon::now()->year;
         $searchField =  Input::get('field');
         $searchInput =  Input::get('input');
-        
-        if ($searchField == 'client') {
-            $products = Product::whereHas('client', function ($query) use ($searchInput) {
-                $query->where('name', 'like', '%'. $searchInput .'%');
-            })
-            ->with('client', 'fabricator')
-            ->whereYear('date_control_calibration', $currentYear)
-            ->orderBy('date_control_calibration', 'asc')
-            ->paginate(500);
-        } else if ($searchField == 'fabricator') {
-            $products = Product::whereHas('fabricator', function ($query) use ($searchInput) {
-                $query->where('name', 'like', '%'. $searchInput .'%');
-            })
-            ->with('client', 'fabricator')
-            ->whereYear('date_control_calibration', $currentYear)
-            ->orderBy('date_control_calibration', 'asc')
-            ->paginate(500);
-        } else {
+
+        if (empty($searchInput)) {
             $products = Product::with('client', 'fabricator')
-            ->where($searchField, 'like', '%'. $searchInput .'%')
             ->whereYear('date_control_calibration', $currentYear)
-            ->orderBy('date_control_calibration', 'asc')
-            ->paginate(500);
+            ->orderBy('date_control_calibration', 'asc')->paginate(10);
+        } else {
+            if ($searchField == 'client') {
+                $products = Product::whereHas('client', function ($query) use ($searchInput) {
+                    $query->where('name', 'like', '%'. $searchInput .'%');
+                })
+                ->with('client', 'fabricator')
+                ->whereYear('date_control_calibration', $currentYear)
+                ->orderBy('date_control_calibration', 'asc')
+                ->paginate(500);
+            } else if ($searchField == 'fabricator') {
+                $products = Product::whereHas('fabricator', function ($query) use ($searchInput) {
+                    $query->where('name', 'like', '%'. $searchInput .'%');
+                })
+                ->with('client', 'fabricator')
+                ->whereYear('date_control_calibration', $currentYear)
+                ->orderBy('date_control_calibration', 'asc')
+                ->paginate(500);
+            } else {
+                $products = Product::with('client', 'fabricator')
+                ->where($searchField, 'like', '%'. $searchInput .'%')
+                ->whereYear('date_control_calibration', $currentYear)
+                ->orderBy('date_control_calibration', 'asc')
+                ->paginate(500);
+            }
         }
         
         return view('dashboard.calibrations.index', compact('products'));

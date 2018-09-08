@@ -8,9 +8,9 @@
          <li>
             <a href="{{ route('home') }}">Inicio</a>
          </li>
-         <li>
+         <!-- <li>
             <a href="{{ route('fabricator.pdf') }}">Reporte en PDF</a>
-         </li>
+         </li> -->
       </ol>
    </div>
 </div>
