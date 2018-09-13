@@ -41,6 +41,15 @@
                            @endif
                         </div>
                         <div class="form-group">
+                           <label>Rubro: (*)</label> 
+                           {{ Form::text('rubro', $client->rubro, ['class' => 'form-control']) }}
+                           @if ($errors->has('rubro'))
+                             <span class="error-validate">
+                                <strong>{{ $errors->first('rubro') }}</strong>
+                             </span>
+                           @endif
+                        </div>
+                        <div class="form-group">
                             <label>Responsable: (*)</label> 
                             {{ Form::text('last_name', $client->last_name, ['class' => 'form-control']) }}
                             @if ($errors->has('last_name'))
@@ -68,6 +77,15 @@
                             @endif
                          </div>
                          <div class="form-group">
+                            <label>Zona: (*)</label> 
+                            {{ Form::text('zone', $client->zone, ['class' => 'form-control']) }}
+                            @if ($errors->has('zone'))
+                              <span class="error-validate">
+                                 <strong>{{ $errors->first('zone') }}</strong>
+                              </span>
+                            @endif
+                         </div>
+                         <div class="form-group">
                             <label>Telefono: (*)</label> 
                             {{ Form::text('phone', $client->phone, ['class' => 'form-control']) }}
                             @if ($errors->has('phone'))
@@ -77,7 +95,7 @@
                             @endif
                          </div>
                          <div class="form-group">
-                            <label>Fax: (*)</label> 
+                            <label>Celular: (*)</label> 
                             {{ Form::text('fax', $client->fax, ['class' => 'form-control']) }}
                             @if ($errors->has('fax'))
                               <span class="error-validate">
@@ -91,6 +109,15 @@
                            @if ($errors->has('email'))
                              <span class="error-validate">
                                 <strong>{{ $errors->first('email') }}</strong>
+                             </span>
+                           @endif
+                        </div>
+                        <div class="form-group">
+                           <label>Pagina Web: (*)</label> 
+                           {{ Form::text('web_page', $client->web_page, ['class' => 'form-control']) }}
+                           @if ($errors->has('web_page'))
+                             <span class="error-validate">
+                                <strong>{{ $errors->first('web_page') }}</strong>
                              </span>
                            @endif
                         </div>

@@ -57,28 +57,81 @@ class ProductController extends Controller
         $searchField =  Input::get('field');
         $searchInput =  Input::get('input');
 
+        $searchField2 =  Input::get('field2');
+        $searchInput2 =  Input::get('input2');
+
+        $searchRelation = false;
+        $searchRelation2 = false;
+
+        if ($searchField == 'client' || $searchField == 'fabricator') {
+            $searchRelation = true;
+        }
+        if ($searchField2 == 'client' || $searchField2 == 'fabricator') {
+            $searchRelation2 = true;
+        }
+
         if (empty($searchInput)) {
+            // si no hay search en el primer campo
             $products = Product::with('client', 'fabricator')->orderBy('id', 'desc')->paginate(10);
         } else {
-            if ($searchField == 'client') {
-                $products = Product::whereHas('client', function ($query) use ($searchInput) {
-                    $query->where('name', 'like', '%'. $searchInput .'%');
-                })
-                ->with('client', 'fabricator')
-                ->orderBy('id', 'desc')
-                ->paginate(500);
-            } else if ($searchField == 'fabricator') {
-                $products = Product::whereHas('fabricator', function ($query) use ($searchInput) {
-                    $query->where('name', 'like', '%'. $searchInput .'%');
-                })
-                ->with('client', 'fabricator')
-                ->orderBy('id', 'desc')
-                ->paginate(500);
+            if (empty($searchInput2)) {
+                // si no hay search en el segundo campo
+                if ($searchRelation) {
+                    //si hay relacion en search
+                    $products = Product::with('client', 'fabricator')
+                        ->whereHas($searchField, function ($query) use ($searchInput) {
+                            $query->where('name', 'like', '%'. $searchInput .'%');
+                        })
+                        ->orderBy('id', 'desc')
+                        ->paginate(500);
+                } else {
+                    //si NO hay relacion en search
+                    $products = Product::with('client', 'fabricator')
+                        ->where($searchField, 'like', '%'. $searchInput .'%')
+                        ->orderBy('id', 'desc')
+                        ->paginate(500);
+                }
             } else {
-                $products = Product::with('client', 'fabricator')
-                ->where($searchField, 'like', '%'. $searchInput .'%')
-                ->orderBy('id', 'desc')
-                ->paginate(500);
+                // si estan el primer y segundo campo en search
+                if ($searchRelation && $searchRelation2) {
+                    // si ambos campos tienen relacion
+                    $products = Product::with('client', 'fabricator')
+                        ->whereHas($searchField, function ($query) use ($searchInput) {
+                            $query->where('name', 'like', '%'. $searchInput .'%');
+                        })
+                        ->whereHas($searchField2, function ($query) use ($searchInput2) {
+                            $query->where('name', 'like', '%'. $searchInput2 .'%');
+                        })
+                        ->orderBy('id', 'desc')
+                        ->paginate(500);
+                } else {
+                    if ($searchRelation) {
+                        // si el primer campo tiene relacion
+                        $products = Product::with('client', 'fabricator')
+                            ->Where($searchField2, 'like', '%'. $searchInput2 .'%')
+                            ->whereHas($searchField, function ($query) use ($searchInput) {
+                                $query->where('name', 'like', '%'. $searchInput .'%');
+                            })
+                            ->orderBy('id', 'desc')
+                            ->paginate(500);
+                    } else if ($searchRelation2) {
+                        // si el segundo campo tiene relacion
+                        $products = Product::with('client', 'fabricator')
+                            ->where($searchField, 'like', '%'. $searchInput .'%')
+                            ->whereHas($searchField2, function ($query) use ($searchInput2) {
+                                $query->where('name', 'like', '%'. $searchInput2 .'%');
+                            })
+                            ->orderBy('id', 'desc')
+                            ->paginate(500);
+                    } else {
+                        // si ningun campo tiene relacion
+                        $products = Product::with('client', 'fabricator')
+                            ->where($searchField, 'like', '%'. $searchInput .'%')
+                            ->Where($searchField2, 'like', '%'. $searchInput2 .'%')
+                            ->orderBy('id', 'desc')
+                            ->paginate(500);
+                    }
+                }
             }
         }
         

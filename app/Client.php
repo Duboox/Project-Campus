@@ -16,7 +16,7 @@ class Client extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'last_name', 'city', 'residency', 'phone', 'fax', 'email', 'id_user'];
+    protected $fillable = ['name', 'rubro', 'last_name', 'city', 'residency', 'zone', 'phone', 'fax', 'email', 'web_page', 'id_user'];
     protected $dates = ['deleted_at'];
 
     public function product()

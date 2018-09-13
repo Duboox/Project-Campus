@@ -83,12 +83,15 @@ class ClientController extends Controller
 
         $newClient = ([
             'name' => $request->name,
+            'rubro' => $request->rubro,
             'last_name' => $request->last_name, 
             'city' => $request->city, 
             'residency' => $request->residency, 
+            'zone' => $request->zone,
             'phone' => $request->phone, 
             'fax' => $request->fax,  
             'email' => $request->email,
+            'web_page' => $request->web_page,
             'id_user' => Auth::user()->id
             ]);
 
@@ -130,7 +133,10 @@ class ClientController extends Controller
             'residency' => $request->residency, 
             'phone' => $request->phone, 
             'fax' => $request->fax,  
-            'email' => $request->email
+            'email' => $request->email,
+            'rubro' => $request->rubro,
+            'zone' => $request->zone,
+            'web_page' => $request->web_page,
             ]);
 
         return save_response($client, 'clients.index', 

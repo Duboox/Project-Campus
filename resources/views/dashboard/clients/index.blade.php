@@ -61,12 +61,15 @@
                      <tr>
                         <th>#ID</th>
                         <th>Empresa</th>
+                        <th>Rubro</th>
                         <th>Responsable</th>
                         <th>Ciudad</th>
-                        <th>Residencia</th>
+                        <th>Dirección</th>
+                        <th>Zona</th>
                         <th>Telefono</th>
-                        <th>Fax</th>
+                        <th>Celular</th>
                         <th>Correo</th>
+                        <th>Pagina web</th>
                         <th>Registro</th>
                         <th>Opciones</th>
                         <th colspan="1">&nbsp;</th>
@@ -77,12 +80,15 @@
                     <tr>
                       <td>{{ $client->id }}</td>
                       <td>{{ $client->name }}</td>
+                      <td>{{ $client->rubro }}</td>
                       <td>{{ $client->last_name }}</td>
                       <td>{{ $client->city }}</td>
                       <td>{{ $client->residency }}</td>
+                      <td>{{ $client->zone }}</td>
                       <td>{{ $client->phone }}</td>
                       <td>{{ $client->fax }}</td>
                       <td>{{ $client->email }}</td>
+                      <td>{{ $client->web_page }}</td>
                       <td>{{ $client->created_at->diffForHumans() }}</td>
                       @can('clients.edit')
                       <td width="10px">
