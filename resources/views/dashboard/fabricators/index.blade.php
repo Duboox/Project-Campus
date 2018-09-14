@@ -63,7 +63,9 @@
                         <th>Nombre</th>
                         <th>Descripción</th>
                         <th>Registro</th>
+                        @role('admin')
                         <th>Opciones</th>
+                        @endrole
                         <th colspan="1">&nbsp;</th>
                      </tr>
                   </thead>
@@ -74,6 +76,7 @@
                       <td>{{ $fabricator->name }}</td>
                       <td>{{ $fabricator->description }}</td>
                       <td>{{ $fabricator->created_at->diffForHumans() }}</td>
+                      @role('admin')
                       @can('fabricators.edit')
                       <td width="10px">
                           <a href="{{ route('fabricators.edit', $fabricator->id) }}" class="btn btn-sm btn-info">
@@ -90,6 +93,7 @@
                           {{ Form::close() }}
                       </td>
                       @endcan
+                      @endrole
                     </tr>
                     @endforeach
                 </tbody>

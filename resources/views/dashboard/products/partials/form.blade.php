@@ -8,23 +8,35 @@
     @endif
 </div>
 <div class="form-group">
-        {{ Form::label('id_client', 'Empresa') }}
+    {{ Form::label('id_client', 'Empresa') }}
+    @if ($newClient)
+        {!! Form::select('id_client', json_decode($clients->pluck('name', 'id'), true), $newClient->id, ['class' => 'form-control select2-search', 'id' => 'name']) !!}
+    @else
         {!! Form::select('id_client', json_decode($clients->pluck('name', 'id'), true), null, ['class' => 'form-control select2-search', 'id' => 'name']) !!}
-        @if ($errors->has('id_client'))
-            <span class="error-validate">
-                <strong>{{ $errors->first('id_client') }}</strong>
-            </span>
-          @endif
+    @endif
+    
+     @if ($errors->has('id_client'))
+        <span class="error-validate">
+            <strong>{{ $errors->first('id_client') }}</strong>
+        </span>
+        @endif
 </div>
+{{ Form::button('Nueva empresa', ['class' => 'btn btn-sm btn-primary', 'data-toggle' => 'modal', 'data-target' => '#myModal']) }}
 <div class="form-group">
         {{ Form::label('id_fabricator', 'Fabricante') }}
-        {!! Form::select('id_fabricator', json_decode($fabricators->pluck('name', 'id'), true), null, ['class' => 'form-control select2-search', 'id' => 'name']) !!}
+        @if ($newFabricator)
+        {!! Form::select('id_fabricator', json_decode($fabricators->pluck('name', 'id'), true), $newFabricator->id, ['class' => 'form-control select2-search', 'id' => 'name']) !!}
+        @else
+            {!! Form::select('id_fabricator', json_decode($fabricators->pluck('name', 'id'), true), null, ['class' => 'form-control select2-search', 'id' => 'name']) !!}   
+        @endif
+        
         @if ($errors->has('id_fabricator'))
             <span class="error-validate">
                 <strong>{{ $errors->first('id_fabricator') }}</strong>
             </span>
           @endif
 </div>
+{{ Form::button('Nuevo fabricante', ['class' => 'btn btn-sm btn-primary', 'data-toggle' => 'modal', 'data-target' => '#ModalFabricator']) }}
 <div class="form-group">
     {{ Form::label('model', 'Modelo') }}
     {{ Form::text('model', null, ['class' => 'form-control', 'id' => 'model', 'placeholder' => 'Ej: AH56SD34']) }}

@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use PDF;
 use App\Client;
+use App\Product;
+use App\Fabricator;
 
 class ClientController extends Controller
 {
@@ -100,6 +102,37 @@ class ClientController extends Controller
         return save_response($client, 'clients.index', 
             'Cliente creado éxitosamente!!!'
         ); 
+    }
+
+    public function storeFromProduct(Request $request)
+    {
+
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $newClient = ([
+            'name' => $request->name,
+            'rubro' => $request->rubro,
+            'last_name' => $request->last_name, 
+            'city' => $request->city, 
+            'residency' => $request->residency, 
+            'zone' => $request->zone,
+            'phone' => $request->phone, 
+            'fax' => $request->fax,  
+            'email' => $request->email,
+            'web_page' => $request->web_page,
+            'id_user' => Auth::user()->id
+            ]);
+
+        $newClient = Client::create($newClient);
+        $newFabricator = null;
+
+        $products = Product::get();
+        $clients = Client::all(['id', 'name']);
+        $fabricators = Fabricator::all(['id', 'name']);
+
+        return view('dashboard.products.create', compact('products', 'fabricators', 'clients', 'newClient', 'newFabricator'));
     }
 
     /**

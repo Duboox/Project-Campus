@@ -105,6 +105,7 @@
                       @endif
                       <td>{{ $product->others }}</td>
                       <td>{{ $product->created_at->diffForHumans() }}</td>
+                      @role('admin')
                       @can('products.edit')
                       <td width="10px">
                           <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-info">
@@ -121,6 +122,7 @@
                           {{ Form::close() }}
                       </td>
                       @endcan
+                      @endrole
                       @can('products.service')
                       <td width="10px">
                           {{ Form::open(['route' => ['products.service', 'productID' => $product->id], 'method' => 'POST']) }}

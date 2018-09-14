@@ -66,7 +66,9 @@
                         <th>Equipo</th>
                         <th>Observación</th>
                         <th>Registro</th>
+                        @role('admin')
                         <th>Opciones</th>
+                        @endrole
                         <th colspan="1">&nbsp;</th>
                      </tr>
                   </thead>
@@ -91,6 +93,7 @@
                           </a>
                       </td>
                       @endcan
+                      @role('admin')
                       @can('services.edit')
                       <td width="10px">
                           <a href="{{ route('services.edit', $service->id) }}" class="btn btn-sm btn-info">
@@ -107,6 +110,7 @@
                           {{ Form::close() }}
                       </td>
                       @endcan
+                      @endrole
                       <!-- if($service->product->status==1 && $service->product->delivery_status==1) -->
                       @if($service->product->status==1)
                         @can('services.certificate')

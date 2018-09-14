@@ -180,8 +180,10 @@ class ProductController extends Controller
         $products = Product::get();
         $clients = Client::all(['id', 'name']);
         $fabricators = Fabricator::all(['id', 'name']);
+        $newClient = null;
+        $newFabricator = null;
 
-        return view('dashboard.products.create', compact('products', 'fabricators', 'clients'));
+        return view('dashboard.products.create', compact('products', 'fabricators', 'clients', 'newClient', 'newFabricator'));
     }
 
     public function store(Request $request)

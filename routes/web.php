@@ -40,6 +40,7 @@ Route::prefix('dashboard')->middleware(['auth', 'disable.back'])->group(function
 	Route::resource('clients', 'Dashboard\ClientController');
 
 	Route::get('search/clients/', 'Dashboard\ClientController@search')->name('clients.search');
+	Route::post('products/clients/new', 'Dashboard\ClientController@storeFromProduct')->name('clients.storeFromProduct');
 
 	// Fabricators
 	Route::get('fabricators/pdf', 'Dashboard\FabricatorController@fabricatorPDFview')->name('fabricator.pdf');
@@ -49,6 +50,7 @@ Route::prefix('dashboard')->middleware(['auth', 'disable.back'])->group(function
 	Route::resource('fabricators', 'Dashboard\FabricatorController');
 
 	Route::get('search/fabricators/', 'Dashboard\FabricatorController@search')->name('fabricators.search');
+	Route::post('products/fabricators/new', 'Dashboard\FabricatorController@storeFromProduct')->name('fabricators.storeFromProduct');
 
 	// Products
 	Route::get('products/pdf', 'Dashboard\ProductController@productPDFview')->name('product.pdf');

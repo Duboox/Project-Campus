@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use PDF;
 use App\Fabricator;
+use App\Client;
+use App\Product;
 
 class FabricatorController extends Controller
 {
@@ -92,6 +94,29 @@ class FabricatorController extends Controller
         return save_response($fabricator, 'fabricators.index', 
             'Fabricante creado éxitosamente!!!'
         ); 
+    }
+
+    public function storeFromProduct(Request $request)
+    {
+
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $newFabricator = ([
+            'name' => $request->name,
+            'description' => $request->description, 
+            'id_user' => Auth::user()->id
+            ]);
+
+        $newFabricator = Fabricator::create($newFabricator);
+        $newClient = null;
+
+        $products = Product::get();
+        $clients = Client::all(['id', 'name']);
+        $fabricators = Fabricator::all(['id', 'name']);
+
+        return view('dashboard.products.create', compact('products', 'fabricators', 'clients', 'newClient', 'newFabricator'));
     }
 
     /**
