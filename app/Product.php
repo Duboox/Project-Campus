@@ -16,7 +16,7 @@ class Product extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'model', 'serial_number', 'internal_code', 'magnitude', 'date_last_calibration', 'date_control_calibration', 'status', 'delivery_status', 'others', 'id_client', 'id_fabricator', 'id_user'];
+    protected $fillable = ['mc', 'name', 'model', 'serial_number', 'internal_code', 'magnitude', 'date_last_calibration', 'date_control_calibration', 'status', 'delivery_status', 'others', 'id_client', 'id_fabricator', 'id_user'];
     protected $dates = ['deleted_at'];
 
     public function client()
