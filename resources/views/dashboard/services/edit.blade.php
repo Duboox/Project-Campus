@@ -32,7 +32,7 @@
                   <div class="row">
                      <div class="col-sm-12 b-r">
                         <div class="form-group">
-                           <label>Fecha ingreso: (*)</label> 
+                           <label>Fecha recepción: (*)</label> 
                            {{ Form::date('date_entry', $service->date_entry, ['class' => 'form-control']) }}
                            @if ($errors->has('date_entry'))
                              <span class="error-validate">
@@ -41,7 +41,7 @@
                            @endif
                         </div>
                         <div class="form-group">
-                            <label>Fecha devolución: (*)</label> 
+                            <label>Fecha conclusión: (*)</label> 
                             {{ Form::date('date_return', $service->date_return, ['class' => 'form-control']) }}
                             @if ($errors->has('date_return'))
                               <span class="error-validate">

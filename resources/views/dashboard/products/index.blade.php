@@ -71,10 +71,10 @@
                         <th>Nro Serial</th>
                         <th>Cod Interno</th>
                         <th>Magnitud</th>
-                        <th>Última calibración</th>
-                        <th>Control de calibración</th>
+                        <!-- <th>Última calibración</th>
+                        <th>Control de calibración</th> -->
                         <th>Estado</th>
-                        <th>Otros</th>
+                        <!-- <th>Otros</th> -->
                         <th>Registro</th>
                         <th>Opciones</th>
                         <th colspan="1">&nbsp;</th>
@@ -95,15 +95,15 @@
                       <td>{{ $product->serial_number }}</td>
                       <td>{{ $product->internal_code }}</td>
                       <td>{{ $product->magnitude }}</td>
-                      <td>{{ $product->date_last_calibration }}</td>
-                      <td>{{ $product->date_control_calibration }}</td>
+                      <!-- <td>{{ $product->date_last_calibration }}</td>
+                      <td>{{ $product->date_control_calibration }}</td> -->
                       @if($product->status==1)
                         <td>Vigente</td>
                       @endif
                       @if($product->status==0)
                         <td>Equipo Vencido</td>
                       @endif
-                      <td>{{ $product->others }}</td>
+                      <!-- <td>{{ $product->others }}</td> -->
                       <td>{{ $product->created_at->diffForHumans() }}</td>
                       @role('admin')
                       @can('products.edit')

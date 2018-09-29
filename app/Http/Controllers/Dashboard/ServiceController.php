@@ -8,6 +8,8 @@ use App\Http\Requests\UserValidate;
 use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
+use Response;
 use Carbon\Carbon;
 use PDF;
 use App\Service;
@@ -152,6 +154,54 @@ class ServiceController extends Controller
         return $pdf->stream();
     }
 
+    public function uploadCertificate(Request $request)
+    {
+
+        $file = $request->file('certificate');
+        $fileName = $file->getClientOriginalName();
+        $fileExt = $file->getClientOriginalExtension();
+
+        // Storage::disk('certificates')->putFile($fileName, $file);
+        // Storage::putFile('certificates', $request->file('certificate'));
+
+        Storage::disk('certificates')->putFileAs('uploads', $file, $request->serviceID.'.'.$fileExt);
+
+        $service = Service::find($request->serviceID);
+        $product = Product::find($service->id_product);
+
+        $service->update([
+            'certificate' => $request->serviceID.'.'.$fileExt
+            ]);
+
+        $product->update([
+            'status' => 1,
+            'delivery_status' => 1, 
+        ]);
+
+        return save_response($fileName, 'services.index', 
+        'Certificado subido éxitosamente!!!'
+        ); 
+    }
+
+    public function downloadCertificate(Request $request, $id)
+    {   
+        $service = Service::find($id);
+
+        $file_path = public_path('certificates/uploads/'.$service->certificate);
+
+        $headers = array(
+            'Content-Type: ' . mime_content_type( $file_path ),
+        
+        );
+
+        // dd($file_path);
+
+        return \Redirect::to('certificates/uploads/'.$service->certificate);
+
+        // $service = Service::find($id);
+        // return Storage::disk('certificates')->download('uploads/' . $service->certificate, $service->certificate, $headers);
+    }
+
     public function create()
     {
         $clients = Client::all(['id', 'name']);
@@ -163,21 +213,26 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
-            'date_return' => 'required',
-        ]);
-
         $product = Product::with('client', 'fabricator')->find($request->productID);
 
         $mytime = Carbon::now();
+        $mytimeDateReturn = Carbon::now()->addDays(3);
+        $mytimeDateLastCalibration = Carbon::now()->addDays(3);
+        $mytimeDateNextCalibration = $mytimeDateReturn->addYear();
+
         $newService = ([
             'date_entry' => $mytime->toDateTimeString(),
-            'date_return' => $request->date_return, 
+            'date_return' => $mytimeDateReturn->toDateTimeString(), 
             'id_client' => $product->client->id, 
             'id_product' => $product->id,
             'observation' => $request->observation,
             'id_user' => Auth::user()->id
             ]);
+
+         $product->update([
+             'date_last_calibration' => $mytimeDateLastCalibration->toDateTimeString(), 
+             'date_control_calibration' => $mytimeDateNextCalibration->toDateTimeString(),  
+             ]);
 
         $service = Service::create($newService);
 

@@ -59,9 +59,9 @@
                <table class="table responsive">
                   <thead>
                      <tr>
-                        <th>#ID</th>
-                        <th>Fecha ingreso</th>
-                        <th>Fecha devolución</th>
+                        <th>Nº Solicitud</th>
+                        <th>Fecha recepción</th>
+                        <th>Fecha conclusión</th>
                         <th>Empresa</th>
                         <th>Equipo</th>
                         <th>Observación</th>
@@ -70,6 +70,7 @@
                         <th>Opciones</th>
                         @endrole
                         <th colspan="1">&nbsp;</th>
+                        <th>Certificado</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -112,7 +113,9 @@
                       @endcan
                       @endrole
                       <!-- if($service->product->status==1 && $service->product->delivery_status==1) -->
-                      @if($service->product->status==1)
+
+
+                      <!-- @if($service->product->status==1)
                         @can('services.certificate')
                           <td width="10px">
                               <a href="{{ route('services.certificate', $service->id) }}" class="btn btn-sm btn-info">
@@ -120,7 +123,26 @@
                               </a>
                           </td>
                         @endcan
-                      @endif
+                      @endif -->
+
+                    <td width="10px">
+                        {{ Form::open(['route' => ['services.certificate.uploadCertificate', 'serviceID' => $service->id, 'files' => true], 'method' => 'POST', 'id' => 'form-certificate', 'enctype' => 'multipart/form-data']) }}
+                            <input id="file-input-certificate" class="file-input-certificate" type="file" name="certificate" accept=".doc, .docx, application/pdf"/>
+                        {{ Form::close() }}
+                        <a href="#" id="button-certificate" class="btn btn-sm btn-info">
+                                    <i class="fa fa-upload"></i>
+                        </a>
+                        @if($service->certificate!=null)
+                            <a href="{{ route('services.certificate.downloadCertificate', $service->id) }}" class="btn btn-sm btn-info">
+                                <i class="fa fa-download"></i>
+                            </a>
+                        @endif
+                        
+                    </td>
+
+
+
+
                     </tr>
                     @endforeach
                 </tbody>
@@ -131,4 +153,15 @@
       </div>
    </div>
 </div>
+<script>
+
+</script>
+<style>
+.file-input-certificate {
+    display: none !important;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+</style>
 @endsection

@@ -92,6 +92,21 @@
                   </div>
                </div>
                {{ Form::close() }}
+
+
+
+               {{ Form::open(['route' => ['products.searchNoCalibrated'], 'method' => 'GET', 'class' => 'form-inline']) }}
+               <div class="ibox-content">
+                  <div class="row">
+                           {{ Form::submit('Equipos vencidos no calibrados', ['class' => 'btn btn-sm btn-primary']) }}
+                  </div>
+               </div>
+               {{ Form::close() }}
+
+
+
+
+
             </div>
          </div>
       </div>

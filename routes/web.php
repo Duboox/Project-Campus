@@ -60,6 +60,7 @@ Route::prefix('dashboard')->middleware(['auth', 'disable.back'])->group(function
 	Route::resource('products', 'Dashboard\ProductController');
 	Route::get('search/products/incoming/', 'Dashboard\ProductController@searchIncoming')->name('products.searchIncoming');
 	Route::get('search/products/discharged/', 'Dashboard\ProductController@searchDischarged')->name('products.searchDischarged');
+	Route::get('search/products/nocalibrated/', 'Dashboard\ProductController@searchNoCalibrated')->name('products.searchNoCalibrated');
 
 	Route::post('products/service', 'Dashboard\ProductController@service')->name('products.service');
 
@@ -78,6 +79,9 @@ Route::prefix('dashboard')->middleware(['auth', 'disable.back'])->group(function
 	Route::resource('services', 'Dashboard\ServiceController');
 
 	Route::get('search/services/', 'Dashboard\ServiceController@search')->name('services.search');
+
+	Route::post('services/certificate/upload', 'Dashboard\ServiceController@uploadCertificate')->name('services.certificate.uploadCertificate');
+	Route::get('services/certificate/download/{id}', 'Dashboard\ServiceController@downloadCertificate')->name('services.certificate.downloadCertificate');
 
 	// Assigns
     Route::get('roles/assigns', 'Dashboard\RoleController@assigns')->name('assigns.index');

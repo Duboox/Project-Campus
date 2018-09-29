@@ -12,5 +12,18 @@ $(document).ready(function() {
 	 });
 	 
 	 $('.select2-search').select2();
+
+
+
+	 $('#file-input-certificate').change(function() {
+		console.log('changedddd');
+	  $('#form-certificate').submit();
+	});
+
+	$('#button-certificate').click(function(){
+		
+		
+		$('#file-input-certificate').click();
+	});
 });
 

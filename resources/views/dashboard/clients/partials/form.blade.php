@@ -35,7 +35,7 @@
       @endif
 </div>
 <div class="form-group">
-  {{ Form::label('residency', 'Residencia') }}
+  {{ Form::label('residency', 'Dirección') }}
   {{ Form::textarea('residency', null, ['class' => 'form-control', 'placeholder' => 'Ej: Av. Nobel 1563, Edf. Tecnibilds Piso 3, Ofc 43.']) }}
   @if ($errors->has('residency'))
       <span class="error-validate">

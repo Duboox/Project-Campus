@@ -60,6 +60,11 @@ return [
             'root' => public_path('images/avatars'),
         ],
 
+        'certificates' => [
+            'driver' => 'local',
+            'root' => public_path('certificates'),
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

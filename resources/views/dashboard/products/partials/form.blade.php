@@ -1,5 +1,5 @@
 <div class="form-group">
-  {{ Form::label('name', 'Nombre') }}
+  {{ Form::label('name', 'Nombre de equipo') }}
   {{ Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'Ej: Telefono Android']) }}
   @if ($errors->has('name'))
       <span class="error-validate">
@@ -73,7 +73,7 @@
       </span>
     @endif
 </div>
-<div class="form-group">
+<!-- <div class="form-group">
     {{ Form::label('date_last_calibration', 'Fecha ultima calibración') }}
     {{ Form::date('date_last_calibration', null, ['class' => 'form-control', 'id' => 'date_last_calibration', 'placeholder' => 'Ej: +58 424 233 6927']) }}
     @if ($errors->has('date_last_calibration'))
@@ -90,16 +90,16 @@
             <strong>{{ $errors->first('date_control_calibration') }}</strong>
         </span>
     @endif
-</div>
-<div class="form-group">
+</div> -->
+<!-- <div class="form-group">
     {{ Form::label('delivery_status', 'Despachado') }}
-    {{ Form::select('delivery_status', array(0 => 'No despachado', 1 => 'Despachado'), null, ['class' => 'form-control']) }}
+    {{ Form::select('delivery_status', array(0 => 'En proceso de calibración', 1 => 'Calibrado'), null, ['class' => 'form-control']) }}
     @if ($errors->has('delivery_status'))
         <span class="error-validate">
             <strong>{{ $errors->first('delivery_status') }}</strong>
         </span>
     @endif
-</div>
+</div> -->
 <div class="form-group">
     {{ Form::label('status', 'Estado') }}
     {{ Form::select('status', array(0 => 'Equipo vencido', 1 => 'Equipo vigente'), null, ['class' => 'form-control']) }}
@@ -109,7 +109,7 @@
         </span>
     @endif
 </div>
-<div class="form-group">
+<!-- <div class="form-group">
         {{ Form::label('others', 'Otros') }}
         {{ Form::text('others', null, ['class' => 'form-control', 'id' => 'others', 'placeholder' => 'Ej: skynessj@gmail.com']) }}
         @if ($errors->has('others'))
@@ -117,7 +117,7 @@
                 <strong>{{ $errors->first('others') }}</strong>
             </span>
         @endif
-    </div>
+    </div> -->
 <div class="form-group">
   {{ Form::submit('Guardar', ['class' => 'btn btn-sm btn-primary']) }}
 </div>

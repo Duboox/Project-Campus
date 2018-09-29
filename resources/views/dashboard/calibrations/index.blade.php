@@ -70,7 +70,9 @@
                         <th>Despachado</th>
                         <th>Otros</th>
                         <th>Registro</th>
+                        @role('admin')
                         <th>Opciones</th>
+                        @endrole
                         <th colspan="1">&nbsp;</th>
                      </tr>
                   </thead>
@@ -98,13 +100,14 @@
                         <td>Equipo vencido</td>
                       @endif
                       @if($product->delivery_status==1)
-                        <td>Despachado</td>
+                        <td>Calibrado</td>
                       @endif
                       @if($product->delivery_status==0)
-                        <td>No despachado</td>
+                        <td>En proceso de calibración</td>
                       @endif
                       <td>{{ $product->others }}</td>
                       <td>{{ $product->created_at->diffForHumans() }}</td>
+                      @role('admin')
                       @can('products.edit')
                       <td width="10px">
                           <a href="{{ route('calibrations.edit', $product->id) }}" class="btn btn-sm btn-info">
@@ -112,7 +115,7 @@
                           </a>
                       </td>
                       @endcan
-                      <!-- can('products.destroy')
+                      @can('products.destroy')
                       <td width="10px">
                           {{ Form::open(['route' => ['products.destroy', $product->id], 'method' => 'DELETE']) }}
                               <button class="btn btn-sm btn-danger" onclick="return confirm('Desea eliminar este producto?')">
@@ -120,7 +123,8 @@
                               </button>
                           {{ Form::close() }}
                       </td>
-                      endcan -->
+                      @endcan
+                      @endrole
                     </tr>
                      @endforeach
                 </tbody>

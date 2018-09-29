@@ -166,6 +166,22 @@ class ProductController extends Controller
         return view('dashboard.products.index', compact('products'));
     }
 
+    public function searchNoCalibrated()
+    {
+        $mytime = Carbon::now()->toDateTimeString();
+        // dd($mytime);
+        $products = Product::with('client', 'fabricator')
+        ->where(function ($query) {
+            $query->where('date_control_calibration', '<=', '2018-09-28');
+        })->where(function ($query) {
+            $query->where('delivery_status', '=', 0)
+                  ->orWhere('delivery_status', '=', NULL);
+        })
+        ->orderBy('id', 'desc')->paginate(500);
+
+        return view('dashboard.products.index', compact('products'));
+    }
+
     public function service(Request $request)
     {
         $productId = $request->productID;
@@ -195,9 +211,9 @@ class ProductController extends Controller
             'model' => 'required', 
             'serial_number' => 'required', 
             'internal_code' => 'required', 
-            'date_last_calibration' => 'required',
+            // 'date_last_calibration' => 'required',
             'status' => 'required',
-            'delivery_status' => 'required',
+            // 'delivery_status' => 'required',
             'magnitude' => 'required',
             'id_client' => 'required',
             'id_fabricator' => 'required',

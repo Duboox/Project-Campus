@@ -44,15 +44,15 @@
       @endif
 </div>
 
-<div class="form-group">
-    {{ Form::label('date_return', 'Fecha devolución') }}
+<!-- <div class="form-group">
+    {{ Form::label('date_return', 'Fecha conclusión') }}
     {{ Form::date('date_return', null, ['class' => 'form-control', 'id' => 'date_return', 'placeholder' => 'Ej: Suarez']) }}
     @if ($errors->has('date_return'))
         <span class="error-validate">
             <strong>{{ $errors->first('date_return') }}</strong>
         </span>
       @endif
-  </div>
+  </div> -->
 <div class="form-group">
     {{ Form::label('observation', 'Observación') }}
     {!! Form::text('observation', null, ['class' => 'form-control', 'id' => 'name']) !!}

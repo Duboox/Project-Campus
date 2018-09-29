@@ -94,7 +94,7 @@
                               </span>
                             @endif
                          </div>
-                         <div class="form-group">
+                         <!-- <div class="form-group">
                             <label>Fecha ultima calibración: (*)</label> 
                             {{ Form::date('date_last_calibration', $product->date_last_calibration, ['class' => 'form-control']) }}
                             @if ($errors->has('date_last_calibration'))
@@ -111,7 +111,7 @@
                                  <strong>{{ $errors->first('date_control_calibration') }}</strong>
                               </span>
                             @endif
-                         </div>
+                         </div> -->
                          <div class="form-group">
                            <label>Estado: (*)</label> 
                            {{ Form::select('status', array(0 => 'Equipo vencido', 1 => 'Equipo vigente'), $product->status, ['class' => 'form-control']) }}
@@ -121,15 +121,15 @@
                              </span>
                            @endif
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                            <label>Despachado: (*)</label> 
-                           {{ Form::select('delivery_status', array(0 => 'No despachado', 1 => 'Despachado'), $product->delivery_status, ['class' => 'form-control']) }}
+                           {{ Form::select('delivery_status', array(0 => 'En proceso de calibración', 1 => 'Calibrado'), $product->delivery_status, ['class' => 'form-control']) }}
                            @if ($errors->has('delivery_status'))
                              <span class="error-validate">
                                 <strong>{{ $errors->first('delivery_status') }}</strong>
                              </span>
                            @endif
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <label>Otros: </label> 
                             {{ Form::text('others', $product->others, ['class' => 'form-control']) }}
