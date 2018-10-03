@@ -105,6 +105,13 @@ class ServiceController extends Controller
                 ->with('client', 'product')
                 ->orderBy('created_at', 'asc')
                 ->paginate(500);
+            } else if ($searchField == 'mc') {
+                $services = Service::whereHas('product', function ($query) use ($searchInput) {
+                    $query->where('mc', 'like', '%'. $searchInput .'%');
+                })
+                ->with('client', 'product')
+                ->orderBy('created_at', 'asc')
+                ->paginate(500);
             } else {
                 $services = Service::with('client', 'product')
                 ->where($searchField, 'like', '%'. $searchInput .'%')
@@ -216,9 +223,14 @@ class ServiceController extends Controller
         $product = Product::with('client', 'fabricator')->find($request->productID);
 
         $mytime = Carbon::now();
-        $mytimeDateReturn = Carbon::now()->addDays(3);
-        $mytimeDateLastCalibration = Carbon::now()->addDays(3);
-        $mytimeDateNextCalibration = $mytimeDateReturn->addYear();
+        $mytimePlus3Days = Carbon::now()->addDays(3);
+        if ($mytimePlus3Days->isWeekend()) {
+            $mytimeDateReturn = Carbon::now()->addDays(5);
+            $mytimeDateLastCalibration = Carbon::now()->addDays(5);
+        } else {
+            $mytimeDateReturn = Carbon::now()->addDays(3);
+            $mytimeDateLastCalibration = Carbon::now()->addDays(3);
+        }
 
         $newService = ([
             'date_entry' => $mytime->toDateTimeString(),
@@ -228,6 +240,8 @@ class ServiceController extends Controller
             'observation' => $request->observation,
             'id_user' => Auth::user()->id
             ]);
+
+        $mytimeDateNextCalibration = $mytimeDateReturn->addYear();
 
          $product->update([
              'date_last_calibration' => $mytimeDateLastCalibration->toDateTimeString(), 
@@ -254,6 +268,15 @@ class ServiceController extends Controller
         $products = Product::all(['id', 'name']);
 
         return view('dashboard.services.edit', compact('service', 'clients', 'products'));
+    }
+
+    public function editUser($id)
+    {
+        $service = Service::with('client', 'product.fabricator')->find($id);
+        $clients = Client::all(['id', 'name']);
+        $products = Product::all(['id', 'name']);
+
+        return view('dashboard.services.editUser', compact('service', 'clients', 'products'));
     }
 
     /**

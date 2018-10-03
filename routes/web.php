@@ -82,6 +82,7 @@ Route::prefix('dashboard')->middleware(['auth', 'disable.back'])->group(function
 
 	Route::post('services/certificate/upload', 'Dashboard\ServiceController@uploadCertificate')->name('services.certificate.uploadCertificate');
 	Route::get('services/certificate/download/{id}', 'Dashboard\ServiceController@downloadCertificate')->name('services.certificate.downloadCertificate');
+	Route::get('services/{service}/editUser', 'Dashboard\ServiceController@editUser')->name('services.editUser');
 
 	// Assigns
     Route::get('roles/assigns', 'Dashboard\RoleController@assigns')->name('assigns.index');

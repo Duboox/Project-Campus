@@ -30,7 +30,7 @@
                <div class="ibox-content">
                   <div class="row">
                         <div class="form-group">
-                        {{ Form::select('field', array('id' => 'ID', 'client' => 'Empresa', 'product' => 'Equipo'), ['class' => 'form-control', 'id' => 'field']) }}
+                        {{ Form::select('field', array('id' => 'Nº solicitud', 'client' => 'Empresa', 'product' => 'Equipo', 'mc' => 'MC de Equipo'), ['class' => 'form-control', 'id' => 'field']) }}
                         {!! Form::text('input', null, ['class' => 'form-control', 'id' => 'input']) !!}
                         </div>
                            {{ Form::submit('Buscar', ['class' => 'btn btn-sm btn-primary']) }}
@@ -63,12 +63,11 @@
                         <th>Fecha recepción</th>
                         <th>Fecha conclusión</th>
                         <th>Empresa</th>
+                        <th>MC Equipo</th>
                         <th>Equipo</th>
                         <th>Observación</th>
                         <th>Registro</th>
-                        @role('admin')
                         <th>Opciones</th>
-                        @endrole
                         <th colspan="1">&nbsp;</th>
                         <th>Certificado</th>
                      </tr>
@@ -83,17 +82,29 @@
                         <td>{{ $service->client->name }}</td>
                       @endif
                       @if($service->product!=null)
+                        <td>{{ $service->product->mc }}</td>
                         <td>{{ $service->product->name }}</td>
                       @endif
                       <td>{{ $service->observation }}</td>
                       <td>{{ $service->created_at->diffForHumans() }}</td>
                       @can('services.show')
                       <td width="10px">
-                          <a href="{{ route('services.show', $service->id) }}" class="btn btn-sm btn-info">
+                          <a target="_blank" href="{{ route('services.show', $service->id) }}" class="btn btn-sm btn-info">
                               Ver
                           </a>
                       </td>
                       @endcan
+
+                      @role('developer')
+                        @can('services.editUser')
+                        <td width="10px">
+                            <a href="{{ route('services.editUser', $service->id) }}" class="btn btn-sm btn-info">
+                                Editar
+                            </a>
+                        </td>
+                        @endcan
+                      @endrole
+
                       @role('admin')
                       @can('services.edit')
                       <td width="10px">

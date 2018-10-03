@@ -208,11 +208,11 @@ class ProductController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'model' => 'required', 
-            'serial_number' => 'required', 
-            'internal_code' => 'required', 
+            // 'model' => 'required', 
+            // 'serial_number' => 'required', 
+            // 'internal_code' => 'required', 
             // 'date_last_calibration' => 'required',
-            'status' => 'required',
+            // 'status' => 'required',
             // 'delivery_status' => 'required',
             'magnitude' => 'required',
             'id_client' => 'required',
