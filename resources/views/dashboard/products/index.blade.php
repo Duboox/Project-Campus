@@ -105,7 +105,6 @@
                       @endif
                       <!-- <td>{{ $product->others }}</td> -->
                       <td>{{ $product->created_at->diffForHumans() }}</td>
-                      @role('admin')
                       @can('products.edit')
                       <td width="10px">
                           <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-info">
@@ -113,6 +112,7 @@
                           </a>
                       </td>
                       @endcan
+                      @role('admin')
                       @can('products.destroy')
                       <td width="10px">
                           {{ Form::open(['route' => ['products.destroy', $product->id], 'method' => 'DELETE']) }}

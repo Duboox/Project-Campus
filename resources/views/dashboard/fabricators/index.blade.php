@@ -63,9 +63,7 @@
                         <th>Nombre</th>
                         <th>Descripción</th>
                         <th>Registro</th>
-                        @role('admin')
                         <th>Opciones</th>
-                        @endrole
                         <th colspan="1">&nbsp;</th>
                      </tr>
                   </thead>
@@ -76,7 +74,6 @@
                       <td>{{ $fabricator->name }}</td>
                       <td>{{ $fabricator->description }}</td>
                       <td>{{ $fabricator->created_at->diffForHumans() }}</td>
-                      @role('admin')
                       @can('fabricators.edit')
                       <td width="10px">
                           <a href="{{ route('fabricators.edit', $fabricator->id) }}" class="btn btn-sm btn-info">
@@ -84,6 +81,7 @@
                           </a>
                       </td>
                       @endcan
+                      @role('admin')
                       @can('fabricators.destroy')
                       <td width="10px">
                           {{ Form::open(['route' => ['fabricators.destroy', $fabricator->id], 'method' => 'DELETE']) }}

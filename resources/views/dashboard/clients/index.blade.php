@@ -71,9 +71,7 @@
                         <th>Correo</th>
                         <th>Pagina web</th>
                         <th>Registro</th>
-                        @role('admin')
                         <th>Opciones</th>
-                        @endrole
                         <th colspan="1">&nbsp;</th>
                      </tr>
                   </thead>
@@ -92,7 +90,6 @@
                       <td>{{ $client->email }}</td>
                       <td>{{ $client->web_page }}</td>
                       <td>{{ $client->created_at->diffForHumans() }}</td>
-                      @role('admin')
                       @can('clients.edit')
                       <td width="10px">
                           <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-sm btn-info">
@@ -100,6 +97,7 @@
                           </a>
                       </td>
                       @endcan
+                      @role('admin')
                       @can('clients.destroy')
                       <td width="10px">
                           {{ Form::open(['route' => ['clients.destroy', $client->id], 'method' => 'DELETE']) }}
