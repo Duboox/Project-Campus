@@ -205,6 +205,12 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $lastRecord = Product::latest('id')->first();
+        if ($lastRecord->mc < 3000) {
+            $newmc = 3000;
+        } else {
+            $newmc = $lastRecord->mc + 1;
+        }
+       
 
         $request->validate([
             'name' => 'required',
@@ -222,7 +228,7 @@ class ProductController extends Controller
         $mytimePlusYear = Carbon::now()->addYear();
 
         $newProduct = ([
-            'mc' => $lastRecord->mc + 1,
+            'mc' => $newmc,
             'name' => $request->name,
             'model' => $request->model, 
             'serial_number' => $request->serial_number, 

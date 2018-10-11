@@ -49,6 +49,7 @@
                               </span>
                             @endif
                          </div>
+                         {{ Form::button('Nueva empresa', ['class' => 'btn btn-sm btn-primary', 'data-toggle' => 'modal', 'data-target' => '#myModal']) }}
                         <div class="form-group">
                             <label>Fabricante: (*)</label> 
                             {!! Form::select('id_fabricator', json_decode($fabricators->pluck('name', 'id'), true), $product->fabricator->id, ['class' => 'form-control select2-search', 'id' => 'name']) !!}
@@ -58,6 +59,7 @@
                               </span>
                             @endif
                          </div>
+                         {{ Form::button('Nuevo fabricante', ['class' => 'btn btn-sm btn-primary', 'data-toggle' => 'modal', 'data-target' => '#ModalFabricator']) }}
                         <div class="form-group">
                             <label>Modelo: (*)</label> 
                             {{ Form::text('model', $product->model, ['class' => 'form-control']) }}
@@ -150,5 +152,47 @@
          </div>
       </div>
    </div>
+</div>
+
+<!-- Modal for new client -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Nueva empresa</h4>
+      </div>
+      <div class="modal-body">
+        {{ Form::open(['route' => 'clients.storeFromProduct']) }}
+            @include('dashboard.clients.partials.form')
+        {{ Form::close() }}
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- Modal for new Fabricator -->
+<div class="modal fade" id="ModalFabricator" tabindex="-1" role="dialog" aria-labelledby="ModalFabricatorLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="ModalFabricatorLabel">Nuevo Fabricante</h4>
+      </div>
+      <div class="modal-body">
+        {{ Form::open(['route' => 'fabricators.storeFromProduct']) }}
+            @include('dashboard.fabricators.partials.form')
+        {{ Form::close() }}
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+    </div>
+  </div>
 </div>
 @endsection
