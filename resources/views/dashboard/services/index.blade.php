@@ -138,13 +138,13 @@
 
                     <td width="10px">
                         {{ Form::open(['route' => ['services.certificate.uploadCertificate', 'serviceID' => $service->id, 'files' => true], 'method' => 'POST', 'id' => 'form-certificate', 'enctype' => 'multipart/form-data']) }}
-                            <input id="file-input-certificate" class="file-input-certificate" type="file" name="certificate" accept=".doc, .docx, application/pdf"/>
+                            <input id="file-input-certificate" class="file-input-certificate" type="file" name="certificate" accept=".doc, .docx, .pdf"/>
                         {{ Form::close() }}
                         <a href="#" id="button-certificate" class="btn btn-sm btn-info">
                                     <i class="fa fa-upload"></i>
                         </a>
                         @if($service->certificate!=null)
-                            <a href="{{ route('services.certificate.downloadCertificate', $service->id) }}" class="btn btn-sm btn-info">
+                            <a href="{{ route('services.certificate.downloadCertificate', $service->id) }}" target="_blank" class="btn btn-sm btn-info">
                                 <i class="fa fa-download"></i>
                             </a>
                         @endif
