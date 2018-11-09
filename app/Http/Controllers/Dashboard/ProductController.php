@@ -301,6 +301,7 @@ class ProductController extends Controller
             'delivery_status' => $request->delivery_status,
             'others' => $request->others,
             'magnitude' => $request->magnitude,
+            'id_client' => $request->id_client,
             'id_fabricator' => $request->id_fabricator
             ]);
 
